@@ -8,7 +8,7 @@ import {map} from 'rxjs/operators';
 })
 export class ProductService {
 
-  private baseUrl ='http://localhost:8080/api/products?size=100';
+  private baseUrl ='http://localhost:8080/api/products?size=50';
 
   constructor(private httpClient : HttpClient) { }
   getProductList():Observable<Product[]> {
