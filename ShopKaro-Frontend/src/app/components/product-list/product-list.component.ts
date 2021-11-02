@@ -9,8 +9,11 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
+
   products! : Product[];
   currentCategoryId!:number;
+  searchMode!:boolean;
+
   constructor(private productService:ProductService,
               private route:ActivatedRoute) { }
 
@@ -22,6 +25,27 @@ export class ProductListComponent implements OnInit {
   }
 
   listProduct(){
+    this.searchMode = this.route.snapshot.paramMap.has('keyword');
+    if(this.searchMode){
+      this.handleSearchProduct();
+    }
+    else{
+      this.handleListProduct();
+    }
+  }
+  
+  handleSearchProduct() {
+    const theKeyword :string = this.route.snapshot.paramMap.get('keyword')!;
+    this.productService.searchProducts(theKeyword).subscribe(
+      data => {
+        this.products = data;
+      }
+    )
+    
+  }
+
+
+  handleListProduct(){
     const hasCategoryId:boolean = this.route.snapshot.paramMap.has('id'); //check if param has id or not 
     if(hasCategoryId){
       //get the category id and convert into number
@@ -35,7 +59,8 @@ export class ProductListComponent implements OnInit {
       data => {
         this.products = data;
       }
-    )
+    );
+
   }
 
 }
