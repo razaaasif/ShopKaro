@@ -20,8 +20,30 @@
                 <!--if product is empty then display a message -->
                 <div *ngIf="products?.length == 0 " class="alert alert-warning col-md-12 "
                 role ="alert ">
-                    No products found... <i class="fas fa-meh"></i></div>
+                    No products found... <i class="fas fa-meh"></i>
+                </div>
             </div>
+            <!--begin footer-->
+            <div class="foter-pagination">
+                <div class="row">
+                    <div class="col-md-6"></div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-9" style="padding-left:30%">
+                                <ngb-pagination [(page)]="thePageNumber"
+                                                [pageSize]="thePageSize"
+                                                [collectionSize]="theTotalElements"
+                                                (pageChange)="listProduct()">
+
+                                </ngb-pagination>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!--End footer-->
         </div>
     </div>
 </div>
