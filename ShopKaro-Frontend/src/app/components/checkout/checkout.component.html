@@ -247,7 +247,107 @@
                 </div>
                 
 
+                <!-- credit card-->
+                <div formGroupName="creditCard" class="form-area">
+                    <h3>Credit Card</h3>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label >Card Type</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="country">
+                                    <option>VISA</option>
+                                    <option>MasterCard</option>
+                                    <option>RuPay</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label >Name on Card </label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="nameOnCard" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2"><label >Card Number</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="cardNumber" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2"><label >Security Code</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="securityCode" type="text">
+                            </div>
+                        </div>
+                    </div> 
+
+                    <!--expiration Month-->
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label >Expiration Month</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="country">
+                                    <option>01</option>
+                                    <option>02</option>
+                                    <option>03</option>
+                                    <option>04</option>
+                                    <option>05</option>
+                                    <option>06</option>
+                                    <option>07</option>
+                                    <option>08</option>
+                                    <option>09</option>
+                                    <option>10</option>
+                                    <option>11</option>
+                                    <option>12</option>
+                                    
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--expiration year-->
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label >Expiration Year</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="country">
+                                    <option>VISA</option>
+                                    <option>MasterCard</option>
+                                    <option>RuPay</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
+
+                <!-- order details -->
+                <div class="form-area">
+                    <h3>Review Your Order</h3>
+
+                    <p>Total Quantity:</p>
+                    <p>Shipping : FREE</p>
+                    <p>Total Price : </p>{{totalPrice}}
+
+                </div>
                 <!--submit button-->
                 <div class="text-center">
                     <button (click)="onSubmit()" type="submit" class="btn btn-primary">Purchase</button>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-checkout',
@@ -9,8 +10,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class CheckoutComponent implements OnInit {
 
   checkoutFormGroup:FormGroup;
+  totalQuantity:number=0;
+  totalPrice:number=0.0;
 
-  constructor(private formBuilder:FormBuilder ) { }
+  constructor(private formBuilder:FormBuilder,
+              private cartService:CartService ) { }
 
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({
@@ -35,14 +39,17 @@ export class CheckoutComponent implements OnInit {
       }),
       creditCard :this.formBuilder.group({
         cardType:[''],
-        nameOnCart:[''],
+        nameOnCard:[''],
         cardNumber:[''],
         securityCode:[''],
         expirationMonth:[''],
         expirationYear:['']
       })
     });
+
+    
   }
+  
 
   onSubmit(){
     console.log("Handling the submit button....");
