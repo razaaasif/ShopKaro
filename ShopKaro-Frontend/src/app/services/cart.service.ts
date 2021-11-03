@@ -11,30 +11,32 @@ export class CartService {
   totalQuantity:Subject<number> = new Subject<number>();
 
   constructor() { }
-  addToCart(theCartItem:CartItem){
-    //check if we already have the item in our cart
-    let alreadyExistsInCart:boolean =false;
-    let existingCartItem! : CartItem ;
-    if(this.cartItems.length > 0){
-    //find the item in the cart based on item id 
-    for(let tempCartItem of this.cartItems){
-      if(tempCartItem.id === theCartItem.id){
-        existingCartItem = tempCartItem;
-        break;
-      }
+  addToCart(theCartItem: CartItem) {
+ 
+    // check if we already have the item in our cart
+    let alreadyExistsInCart: boolean = false;
+    let existingCartItem: CartItem = undefined;
+ 
+    if (this.cartItems.length > 0) {
+      // find the item in the cart based on item id
+ 
+      //find() method return the element which matches else return undefined
+      existingCartItem =this.cartItems.find(tempCartItem => tempCartItem.id === theCartItem.id);
+ 
+      // check if we found it
+      alreadyExistsInCart = (existingCartItem != undefined);
     }
-
-    //check if we found
-    alreadyExistsInCart = (existingCartItem != undefined)
-    }
-    if(alreadyExistsInCart){
+ 
+    if (alreadyExistsInCart) {
+      // increment the quantity
       existingCartItem.quantity++;
     }
-    else{
-      //just add the item to cart
+    else {
+      // just add the item to the array
       this.cartItems.push(theCartItem);
     }
-    //compute cart total price and total quantity
+ 
+    // compute cart total price and total quantity
     this.computeCartTotals();
   }
   computeCartTotals() {
@@ -45,7 +47,7 @@ export class CartService {
       totalQuantityValue += currentCartItem.quantity;
     }
 
-    //publish the new values .. all subscribers will recieve the new data
+    //publish the new values .. all subscribers will receive the new data
     this.totalPrice.next(totalPriceValue);
     this.totalQuantity.next(totalQuantityValue);
 
@@ -53,6 +55,7 @@ export class CartService {
     this.logCartData(totalPriceValue,totalQuantityValue);
   }
   logCartData(totalPriceValue: number, totalQuantityValue: number) {
+
     for(let tempCartItem of this.cartItems){
       const subTotalPrice  =tempCartItem.quantity * tempCartItem.unitPrice;
       console.log(`name: ${tempCartItem.name},unitPrice:${tempCartItem.unitPrice},subTotalPrice:${subTotalPrice}`)
