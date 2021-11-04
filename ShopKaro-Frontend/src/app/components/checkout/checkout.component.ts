@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupName } from '@angular/forms';
+import { Country } from 'src/app/common/country';
+import { State } from 'src/app/common/state';
 import { CartService } from 'src/app/services/cart.service';
 import { ShopkaroService } from 'src/app/services/shopkaro.service';
 
@@ -16,6 +18,11 @@ export class CheckoutComponent implements OnInit {
 
   creditCardYears:number[]=[];
   creditCardMonths:number[]=[];
+
+  countries:Country[] = [];
+
+  shippingAddressStates:State[] = [];
+  billingAddressStates:State[]=[];
 
   constructor(private formBuilder:FormBuilder,
               private cartService:CartService,
@@ -71,6 +78,14 @@ export class CheckoutComponent implements OnInit {
       }
     )
 
+    //populate the countries
+
+    this.shopKaroService.getCountries().subscribe(
+      data =>{
+        console.log("Retrieving countries : "+JSON.stringify(data));
+        this.countries=data;
+      }
+    )
     
   }
   
@@ -82,7 +97,10 @@ export class CheckoutComponent implements OnInit {
 
   copyShippingAddressToBillingAddress(event){
     if(event.target.checked){
-      this.checkoutFormGroup.controls.billingAddress.setValue(this.checkoutFormGroup.controls.shippingAddress.value);
+      this.checkoutFormGroup.controls.billingAddress
+                                    .setValue(this.checkoutFormGroup.controls.shippingAddress.value);
+
+      this.billingAddressStates = this.shippingAddressStates;
     }
     else{
       this.checkoutFormGroup.controls.billingAddress.reset();
@@ -110,6 +128,34 @@ export class CheckoutComponent implements OnInit {
         this.creditCardMonths = data;
       }
     )
+  }
+
+
+  //get states method
+  getStates(formGroupName:string){
+
+    const formGroup = this.checkoutFormGroup.get(formGroupName);
+    const countryCode = formGroup.value.country.code;
+    const countryName = formGroup.value.country.name;
+
+    console.log(`${formGroupName} country code : ${countryCode}`);
+    console.log(`${formGroupName} country name : ${countryName}`);
+    this.shopKaroService.getStates(countryCode).subscribe(
+      
+      data =>{
+        if(formGroupName === 'shippingAddress'){
+          this.shippingAddressStates = data;
+        }
+        else{
+          this.billingAddressStates = data;
+        }
+
+        //select first state as default
+        formGroup.get('state').setValue(data[0]);
+        
+      }
+    );
+
   }
 
 }
