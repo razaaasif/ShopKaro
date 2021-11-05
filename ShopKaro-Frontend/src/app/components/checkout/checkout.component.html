@@ -15,10 +15,10 @@
                 <input formControlName="firstName" type="text" />
                 <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert alert-danger"> 
                     <!--if the validation for required failed show this -->
-                    <div *ngIf="firstName.errors.required || firstName.errors.notOnlyWhitespace">
+                    <div *ngIf="firstName.errors.required || firstName.errors.notOnlyWhitespace ">
                         First Name is required
                     </div>
-                    <div *ngIf="firstName.errors.minLength">
+                    <div *ngIf="firstName.errors.minlength">
                         First Name must be at least 2 characters
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                     <div *ngIf="lastName.errors.required || lastName.errors.notOnlyWhitespace">
                         Last Name is required
                     </div>
-                    <div *ngIf="lastName.errors.minLength">
+                    <div *ngIf="lastName.errors.minlength">
                         Last Name must be at least 2 characters
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                       Street Name is required
                   </div>
 
-                  <div *ngIf="shippingAddressStreet.errors.minLength">
+                  <div *ngIf="shippingAddressStreet.errors.minlength">
                     Street must be at least 2 characters
                 </div>
 
@@ -128,7 +128,7 @@
                     City is required
                   </div>
 
-                  <div *ngIf="shippingAddressCity.errors.minLength">
+                  <div *ngIf="shippingAddressCity.errors.minlength">
                     City must be at least 2 characters
                 </div>
                   
@@ -149,8 +149,8 @@
                     Zip Code is required
                   </div>
 
-                  <div *ngIf="shippingAddressZipCode.errors.minLength">
-                    Zip Code must be at least 5 characters
+                  <div *ngIf="shippingAddressZipCode.errors.minlength">
+                    Zip Code must be at least 5 digits
                 </div>
 
               </div>
@@ -244,7 +244,7 @@
                   </div>
 
 
-                  <div *ngIf="billingAddressStreet.errors.minLength">
+                  <div *ngIf="billingAddressStreet.errors.minlength">
                     Street must be at least 2 characters
                 </div>
 
@@ -265,7 +265,7 @@
                     City is required
                   </div>
 
-                  <div *ngIf="billingAddressCity.errors.minLength">
+                  <div *ngIf="billingAddressCity.errors.minlength">
                     City must be at least 2 characters
                 </div>
 
@@ -286,8 +286,8 @@
                     Zip Code is required
                   </div>
 
-                  <div *ngIf="billingAddressZipCode.errors.minLength">
-                    Zip Code must be at least 5 characters
+                  <div *ngIf="billingAddressZipCode.errors.minlength">
+                    Zip Code must be 5 digits
                 </div>
 
               </div>
@@ -368,7 +368,7 @@
                     Card Type is required
                   </div>
 
-                  <div *ngIf="creditCardNameOnCard.errors.minLength">
+                  <div *ngIf="creditCardNameOnCard.errors.minlength">
                     Name on Card must be at least 2 characters
                 </div>
                   
@@ -386,12 +386,12 @@
 
                 <div *ngIf="creditCardCardNumber.invalid && (creditCardCardNumber.dirty || creditCardCardNumber.touched)" class="alert alert-danger"> 
                   <!--if the validation for required failed show this -->
-                  <div *ngIf="creditCardCardNumber.errors.required || creditCardCardNumber.errors.notOnlyWhitespace">
+                  <div *ngIf="creditCardCardNumber.errors.required">
                     Card Number is required
                   </div>
 
-                  <div *ngIf="creditCardCardNumber.errors.minLength">
-                    Card Number must be at least 16 characters
+                  <div *ngIf="creditCardCardNumber.errors.pattern">
+                    Card Number must be 16 digits long
                 </div>
                   
               </div>
@@ -409,12 +409,12 @@
 
                 <div *ngIf="creditCardSecurityCode.invalid && (creditCardSecurityCode.dirty || creditCardSecurityCode.touched)" class="alert alert-danger"> 
                   <!--if the validation for required failed show this -->
-                  <div *ngIf="creditCardSecurityCode.errors.required || creditCardSecurityCode.errors.notOnlyWhitespace">
+                  <div *ngIf="creditCardSecurityCode.errors.required">
                     Security Code is required
                   </div>
 
-                  <div *ngIf="creditCardSecurityCode.errors.minLength">
-                    Security Code must be at least 3 characters
+                  <div *ngIf="creditCardSecurityCode.errors.pattern">
+                    Security Code must be 3 digits long
                 </div>
                   
               </div>

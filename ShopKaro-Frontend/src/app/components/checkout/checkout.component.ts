@@ -60,8 +60,9 @@ export class CheckoutComponent implements OnInit {
         country:new FormControl('',[Validators.required]),
 
         zipCode:new FormControl('',[Validators.required,
-                                    Validators.minLength(2),
-                                    ShopkaroValidators.notOnlyWhitespace]),
+                                    Validators.minLength(5),
+                                    ShopkaroValidators.notOnlyWhitespace,
+                                    Validators.pattern('[0-9]{5}')]),
       }),
 
 
@@ -80,8 +81,9 @@ export class CheckoutComponent implements OnInit {
         country:new FormControl('',[Validators.required]),
 
         zipCode:new FormControl('',[Validators.required,
-                            Validators.minLength(2),
-                            ShopkaroValidators.notOnlyWhitespace]),
+                            Validators.minLength(5),
+                            ShopkaroValidators.notOnlyWhitespace,
+                            Validators.pattern('[0-9]{5}')]),
         }),
 
       creditCard :this.formBuilder.group({
@@ -89,13 +91,16 @@ export class CheckoutComponent implements OnInit {
 
         nameOnCard:new FormControl('',[Validators.required,
                                       Validators.minLength(2),
-                                      ShopkaroValidators.notOnlyWhitespace]),
+                                      ShopkaroValidators.notOnlyWhitespace,
+                                      ]),
+
+
         cardNumber:new FormControl('',[Validators.required,
-                                      Validators.minLength(16),
-                                      ShopkaroValidators.notOnlyWhitespace]),
+                                      Validators.pattern('[0-9]{16}')]),
+
+                                      
         securityCode:new FormControl('',[Validators.required,
-                                        Validators.minLength(3),
-                                        ShopkaroValidators.notOnlyWhitespace]),
+                                         Validators.pattern('[0-9]{3}')]),
 
         expirationMonth:new FormControl('',[Validators.required]),
 
