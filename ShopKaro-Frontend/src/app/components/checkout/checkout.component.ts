@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupName, Validators } from '@angular/forms';
 import { Country } from 'src/app/common/country';
+import { ShopkaroValidators } from 'src/app/common/shopkaro-validators';
 import { State } from 'src/app/common/state';
 import { CartService } from 'src/app/services/cart.service';
 import { ShopkaroService } from 'src/app/services/shopkaro.service';
@@ -31,9 +32,16 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({
       customer:this.formBuilder.group({
-        firstName:new FormControl('',[Validators.required,Validators.minLength(2)]),
-        lastName:new FormControl('',[Validators.required,Validators.minLength(2)]),
-        email:new FormControl('',[Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
+        firstName:new FormControl('',[Validators.required,
+                                      Validators.minLength(2),
+                                      ShopkaroValidators.notOnlyWhitespace]),
+
+        lastName:new FormControl('',[Validators.required,
+                                    Validators.minLength(2),
+                                    ShopkaroValidators.notOnlyWhitespace]),
+
+        email:new FormControl('',[Validators.required, 
+                                  Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
       shippingAddress:this.formBuilder.group({
         street:[''],
