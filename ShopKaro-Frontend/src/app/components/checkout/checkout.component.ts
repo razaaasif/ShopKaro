@@ -30,6 +30,7 @@ export class CheckoutComponent implements OnInit {
               private shopKaroService:ShopkaroService ) { }
 
   ngOnInit(): void {
+    this.reviewCartDetails();
     this.checkoutFormGroup = this.formBuilder.group({
 
       customer:this.formBuilder.group({
@@ -108,18 +109,7 @@ export class CheckoutComponent implements OnInit {
       })
     });
 
-    this.cartService.totalPrice.subscribe(
-      data =>{
-        this.totalPrice = data
-      }
-    );
-
-    this.cartService.totalQuantity.subscribe(
-      data =>{
-        this.totalQuantity = data
-      }
-    );
-
+    
     this.cartService.computeCartTotals();
     const startMonth :number = new Date().getMonth()+1;
     console.log("StartMonth : "+startMonth);
@@ -149,6 +139,19 @@ export class CheckoutComponent implements OnInit {
       }
     )
     
+  }
+  reviewCartDetails() {
+    //subscribe to cartService.totalQuantity
+
+    this.cartService.totalQuantity.subscribe(
+      totalPrice => this.totalPrice = totalPrice
+    );
+
+    //subscribe to cartService.totalPrice
+    this.cartService.totalPrice.subscribe(
+      totalQuantity => this.totalQuantity = totalQuantity
+    );
+
   }
   
 
