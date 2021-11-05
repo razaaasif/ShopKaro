@@ -3,5 +3,6 @@
         "Searcht",
         "Shopkaro",
         "zipcode"
-    ]
+    ],
+    "git.ignoreLimitWarning": true
 }
