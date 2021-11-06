@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ShopKaro-Frontend": {
+    "Shopkaro-Frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ShopKaro-Frontend",
+            "outputPath": "dist/Shopkaro-Frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ShopKaro-Frontend:build:production"
+              "browserTarget": "Shopkaro-Frontend:build:production"
             },
             "development": {
-              "browserTarget": "ShopKaro-Frontend:build:development"
+              "browserTarget": "Shopkaro-Frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ShopKaro-Frontend:build"
+            "browserTarget": "Shopkaro-Frontend:build"
           }
         },
         "test": {
@@ -107,5 +107,5 @@
       }
     }
   },
-  "defaultProject": "ShopKaro-Frontend"
+  "defaultProject": "Shopkaro-Frontend"
 }
