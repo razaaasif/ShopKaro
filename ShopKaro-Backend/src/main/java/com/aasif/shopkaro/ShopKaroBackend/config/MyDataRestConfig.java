@@ -1,9 +1,6 @@
 package com.aasif.shopkaro.ShopKaroBackend.config;
 
-import com.aasif.shopkaro.ShopKaroBackend.entity.Country;
-import com.aasif.shopkaro.ShopKaroBackend.entity.Product;
-import com.aasif.shopkaro.ShopKaroBackend.entity.ProductCategory;
-import com.aasif.shopkaro.ShopKaroBackend.entity.State;
+import com.aasif.shopkaro.ShopKaroBackend.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -39,6 +36,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         disableHttpMethods(ProductCategory.class ,config, theUnsupportedActions);
         disableHttpMethods(Country.class,config, theUnsupportedActions);
         disableHttpMethods(State.class,config, theUnsupportedActions);
+        disableHttpMethods(Order.class,config, theUnsupportedActions);
         //configure cors mapping
         cors.addMapping(config.getBasePath()+"/**").allowedOrigins(theAllowedOrigins);
 
