@@ -5,6 +5,7 @@ import com.aasif.shopkaro.ShopKaroBackend.entity.Product;
 import com.aasif.shopkaro.ShopKaroBackend.entity.ProductCategory;
 import com.aasif.shopkaro.ShopKaroBackend.entity.State;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
@@ -19,6 +20,8 @@ import java.util.Set;
 
 @Configuration
 public class MyDataRestConfig implements RepositoryRestConfigurer {
+    @Value("${allowed.origins}")
+    private String[] theAllowedOrigins;
 
 
     private EntityManager entityManager;
@@ -29,14 +32,15 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
-        HttpMethod[] theUnsupportedActions = {HttpMethod.PUT,HttpMethod.POST,HttpMethod.DELETE};
+        HttpMethod[] theUnsupportedActions = {HttpMethod.PUT,HttpMethod.POST,HttpMethod.DELETE,HttpMethod.PATCH};
 
         //disable HTTP methods for Products PUT,POST and DELETE
         disableHttpMethods(Product.class ,config, theUnsupportedActions);
         disableHttpMethods(ProductCategory.class ,config, theUnsupportedActions);
         disableHttpMethods(Country.class,config, theUnsupportedActions);
         disableHttpMethods(State.class,config, theUnsupportedActions);
-
+        //configure cors mapping
+        cors.addMapping(config.getBasePath()+"/**").allowedOrigins(theAllowedOrigins);
 
         //call an internal method
         exposeIds(config);
@@ -47,6 +51,9 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
                 .forDomainType(theClass)
                 .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions)))
                 .withCollectionExposure(((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions)));
+
+
+
     }
 
     private void exposeIds(RepositoryRestConfiguration config ){
