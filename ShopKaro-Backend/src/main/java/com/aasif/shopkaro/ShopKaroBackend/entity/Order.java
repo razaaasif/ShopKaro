@@ -30,7 +30,7 @@ public class Order {
     private String status;
     @Column
     @CreationTimestamp
-    private Date daeCreated;
+    private Date dateCreated;
     @Column
     @UpdateTimestamp
     private Date lastUpdated;
