@@ -5,15 +5,19 @@ import { environment } from 'src/environments/environment.development';
 import { AppUrl } from '../app-url';
 import { map } from 'rxjs/internal/operators/map';
 import { Observable } from 'rxjs';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  constructor(private http: HttpClient) {}
-  getProducts(): Observable<any[]> {
+  constructor(private http: HttpClient, private logger: LoggerService) {}
+  getProducts(): Observable<ProductModel[]> {
+    this.logger.debug('getProducts() starts');
     return this.http
-      .get<any>(environment.baseUrl + AppUrl.PRODUCTS)
+      .get<{ _embedded: { products: Array<ProductModel> } }>(
+        environment.baseUrl + AppUrl.PRODUCTS
+      )
       .pipe(map((response) => response._embedded.products));
   }
 }
