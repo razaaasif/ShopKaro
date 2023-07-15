@@ -1,127 +1,38 @@
 <div class="row">
-  <div class="col-md-3">
-    <div class="product-box">
-      <a href="product-detail.html">
-        <img
-          src="assets/images/products/placeholder.png"
-          class="img-responsive"
-        />
-      </a>
-      <a href="product-detail.html">
-        <h1>Lorem ipsum dolor sit amet</h1>
-      </a>
-      <h2>Duis aute irure dolor in reprehenderit in voluptate</h2>
-      <div class="price">19.22 $</div>
-      <a href="#" class="primary-btn">Add to cart</a>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="product-box">
-      <a href="product-detail.html">
-        <img
-          src="assets/images/products/placeholder.png"
-          class="img-responsive"
-        />
-      </a>
-      <a href="product-detail.html">
-        <h1>Lorem ipsum dolor sit amet</h1>
-      </a>
-      <h2>Duis aute irure dolor in reprehenderit in voluptate</h2>
-      <div class="price">19.22 $</div>
-      <a href="#" class="primary-btn">Add to cart</a>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="product-box">
-      <a href="product-detail.html">
-        <img
-          src="assets/images/products/placeholder.png"
-          class="img-responsive"
-        />
-      </a>
-      <a href="product-detail.html">
-        <h1>Lorem ipsum dolor sit amet</h1>
-      </a>
-      <h2>Duis aute irure dolor in reprehenderit in voluptate</h2>
-      <div class="price">19.22 $</div>
-      <a href="#" class="primary-btn">Add to cart</a>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="product-box">
-      <a href="product-detail.html">
-        <img
-          src="assets/images/products/placeholder.png"
-          class="img-responsive"
-        />
-      </a>
-      <a href="product-detail.html">
-        <h1>Lorem ipsum dolor sit amet</h1>
-      </a>
-      <h2>Duis aute irure dolor in reprehenderit in voluptate</h2>
-      <div class="price">19.22 $</div>
-      <a href="#" class="primary-btn">Add to cart</a>
-    </div>
-  </div>
-  <div class="clearfix"></div>
-  <div class="col-md-3">
-    <div class="product-box">
-      <a href="product-detail.html">
-        <img
-          src="assets/images/products/placeholder.png"
-          class="img-responsive"
-        />
-      </a>
-      <a href="product-detail.html">
-        <h1>Lorem ipsum dolor sit amet</h1>
-      </a>
-      <h2>Duis aute irure dolor in reprehenderit in voluptate</h2>
-      <div class="price">19.22 $</div>
-      <a href="#" class="primary-btn">Add to cart</a>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="product-box">
-      <a href="product-detail.html">
-        <img
-          src="assets/images/products/placeholder.png"
-          class="img-responsive"
-        />
-      </a>
-      <a href="product-detail.html">
-        <h1>Lorem ipsum dolor sit amet</h1>
-      </a>
-      <h2>Duis aute irure dolor in reprehenderit in voluptate</h2>
-      <div class="price">19.22 $</div>
-      <a href="#" class="primary-btn">Add to cart</a>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="product-box">
-      <a href="product-detail.html">
-        <img
-          src="assets/images/products/placeholder.png"
-          class="img-responsive"
-        />
-      </a>
-      <a href="product-detail.html">
-        <h1>Lorem ipsum dolor sit amet</h1>
-      </a>
-      <h2>Duis aute irure dolor in reprehenderit in voluptate</h2>
-      <div class="price">19.22 $</div>
-      <a href="#" class="primary-btn">Add to cart</a>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="product-box">
-      <img
-        src="assets/images/products/placeholder.png"
-        class="img-responsive"
-      />
-      <h1>Lorem ipsum dolor sit amet</h1>
-      <h2>Duis aute irure dolor in reprehenderit in voluptate</h2>
-      <div class="price">19.22 $</div>
-      <a href="#" class="primary-btn">Add to cart</a>
-    </div>
-  </div>
+  <ng-container *ngFor="let product of products">
+    <div class="col-md-3">
+      <div class="product-box product-view">
+        <a href="product-detail.html">
+          <img [src]="product.imageUrl" class="img-responsive" />
+        </a>
+        <div class="product-info">
+          <a href="product-detail.html">
+            <h1 class="truncate">
+              <i>{{ product.name }}</i>
+            </h1>
+          </a>
+          <h2 class="truncate">
+            {{ product.description }}
+          </h2>
+          <div class="price">
+            {{
+              product.unitPrice - product.unitPrice / getRandomPercentage()
+                | currency : "INR"
+            }}
+            off {{ getRandomPercentage() | percent }}
+            <del>({{ product.unitPrice + getRandomPercentage() }})</del>
+          </div>
+          <div class="flex-row">
+            <button href="#" class="btn btn-outline-info flex-extend">
+              Buy now
+            </button>
+
+            <button href="#" class="btn btn-info mx-2 flex-extend">
+              Add to cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div></ng-container
+  >
 </div>

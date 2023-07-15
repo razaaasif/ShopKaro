@@ -1,0 +1,24 @@
+.product-info {
+  width: 250px !important;
+}
+h2.truncate {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Number of lines to show */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+h1.truncate {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Number of lines to show */
+  max-height: 35px;
+  text-overflow: ellipsis;
+}
+
+/* .truncate:hover {
+  white-space: normal;
+  overflow: visible;
+} */

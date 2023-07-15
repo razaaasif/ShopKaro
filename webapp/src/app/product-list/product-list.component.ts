@@ -26,4 +26,9 @@ export class ProductListComponent implements OnInit {
       this.products = data;
     });
   }
+
+  getRandomPercentage(): number {
+    const randomPercentage = Math.floor(Math.random()) + 1; // Generate a random number between 1 and 100
+    return randomPercentage;
+  }
 }
