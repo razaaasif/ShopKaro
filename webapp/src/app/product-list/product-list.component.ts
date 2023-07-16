@@ -27,8 +27,14 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  getRandomPercentage(): number {
-    const randomPercentage = Math.floor(Math.random()) + 1; // Generate a random number between 1 and 100
-    return randomPercentage;
+  public getOfferPrice(product: ProductModel): number {
+    const randomPercentage = Math.floor(Math.random() * 10) + 1;
+    product.off = randomPercentage;
+    console.log('off -> ' + product.off);
+
+    product.newPrice = product.unitPrice * (1 - product.off / 100);
+
+    console.log('getOfferPrice() product' + JSON.stringify(product));
+    return product.newPrice;
   }
 }

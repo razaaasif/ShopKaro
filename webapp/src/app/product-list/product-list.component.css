@@ -11,11 +11,19 @@ h2.truncate {
 
 h1.truncate {
   display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* Number of lines to show */
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-line-clamp: 2;
+  -ms-line-clamp: 2;
   max-height: 35px;
   text-overflow: ellipsis;
+  /* Additional styles for testing */
+  font-size: 16px;
+  line-height: 1.4;
 }
 
 /* .truncate:hover {

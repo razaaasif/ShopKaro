@@ -14,13 +14,14 @@
           <h2 class="truncate">
             {{ product.description }}
           </h2>
-          <div class="price">
-            {{
-              product.unitPrice - product.unitPrice / getRandomPercentage()
-                | currency : "INR"
-            }}
-            off {{ getRandomPercentage() | percent }}
-            <del>({{ product.unitPrice + getRandomPercentage() }})</del>
+          <div class="price mb-1">
+            {{ getOfferPrice(product) | currency : "INR" }}
+
+            <del class="text-muted">{{
+              product.unitPrice | currency : "INR"
+            }}</del
+            >&nbsp;
+            <span class="text-success">{{ product.off }}% off</span>
           </div>
           <div class="flex-row">
             <button href="#" class="btn btn-outline-info flex-extend">
