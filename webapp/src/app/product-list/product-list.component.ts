@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { ProductModel } from 'src/app/model/product.model';
 import { LoggerService } from '../services/logger.service';
+import { ProductCategory } from '../model/product-category.model';
+import { zip } from 'rxjs';
 
 @Component({
   selector: 'app-product-list',
@@ -21,20 +23,23 @@ export class ProductListComponent implements OnInit {
   }
 
   listProducts() {
-    this.productService.getProducts().subscribe((data) => {
-      this.logger.debug('listProducts() -> ' + JSON.stringify(data));
-      this.products = data;
-    });
+    zip(this.productService.getProducts()).subscribe(
+      ([products]: [ProductModel[]]) => {
+        this.logger.debug(
+          'listProducts() products -> ' + JSON.stringify(products)
+        );
+
+        this.products = products.map((product) => {
+          this.getOfferPrice(product);
+          return product;
+        });
+      }
+    );
   }
 
-  public getOfferPrice(product: ProductModel): number {
+  public getOfferPrice(product: ProductModel): void {
     const randomPercentage = Math.floor(Math.random() * 10) + 1;
-    product.off = randomPercentage;
-    console.log('off -> ' + product.off);
-
+    product.off = randomPercentage * 10;
     product.newPrice = product.unitPrice * (1 - product.off / 100);
-
-    console.log('getOfferPrice() product' + JSON.stringify(product));
-    return product.newPrice;
   }
 }

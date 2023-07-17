@@ -15,7 +15,7 @@
             {{ product.description }}
           </h2>
           <div class="price mb-1">
-            {{ getOfferPrice(product) | currency : "INR" }}
+            {{ product.newPrice | currency : "INR" }}
 
             <del class="text-muted">{{
               product.unitPrice | currency : "INR"

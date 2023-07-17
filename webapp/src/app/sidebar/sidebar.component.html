@@ -7,17 +7,8 @@
   <div class="menu-sidebar-content js-scrollbar1">
     <nav class="navbar-sidebar">
       <ul class="list-unstyled navbar-list">
-        <li>
-          <a href="#">Books</a>
-        </li>
-        <li>
-          <a href="#">Coffee Mugs</a>
-        </li>
-        <li>
-          <a href="#">Mouse Pads</a>
-        </li>
-        <li>
-          <a href="#">Luggage Tags</a>
+        <li *ngFor="let category of categories">
+          <a href="#">{{ category.categoryName }}</a>
         </li>
       </ul>
     </nav>
