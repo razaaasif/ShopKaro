@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductCategory } from '../model/product-category.model';
-import { ProductService } from '../services/product.service';
-import { LoggerService } from '../services/logger.service';
+import { ProductCategory } from '../../shared/model/product-category.model';
+import { ProductService } from '../../shared/services/product.service';
+import { LoggerService } from '../../shared/services/logger.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -22,11 +22,11 @@ export class SidebarComponent implements OnInit {
     this.productService
       .getProductCategories()
       .subscribe((categories: Array<ProductCategory>) => {
-        // this.logger.debug(
-        //   'loadProductCategory() category -> ' + JSON.stringify(categories)
-        // );
+        this.logger.debug(
+          'loadProductCategory() category -> ' + JSON.stringify(categories)
+        );
         this.categories = categories.map((item) => {
-          return new ProductCategory(item.categoryName);
+          return new ProductCategory(item.id, item.categoryName);
         });
         this.logger.debug(
           'loadProductCategory()  categories  -> ' +

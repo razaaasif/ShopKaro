@@ -7,8 +7,12 @@
   <div class="menu-sidebar-content js-scrollbar1">
     <nav class="navbar-sidebar">
       <ul class="list-unstyled navbar-list">
-        <li *ngFor="let category of categories">
-          <a href="#">{{ category.categoryName }}</a>
+        <li *ngFor="let category of categories; let i = index">
+          <a
+            routerLink="/category/{{ category.id }}"
+            routerLinkActive="active-link"
+            >{{ category.categoryName }}</a
+          >
         </li>
       </ul>
     </nav>
