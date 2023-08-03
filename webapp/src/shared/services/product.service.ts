@@ -1,18 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ProductModel } from '../model/product.model';
-import { environment } from '../../environments/environment.development';
-import { AppUrl } from '../../app/app-url';
-import { map } from 'rxjs/internal/operators/map';
 import { Observable } from 'rxjs';
-import { LoggerService } from './logger.service';
+import { map } from 'rxjs/internal/operators/map';
+import { AppUrl } from '../../app/app-url';
 import { ProductCategory } from '../model/product-category.model';
+import { ProductModel } from '../model/product.model';
 import { replaceUrlParameters, safeTrim } from '../utils';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
+
   constructor(private http: HttpClient, private logger: LoggerService) {}
 
   getProductCategories(): Observable<Array<ProductCategory>> {
@@ -56,5 +56,9 @@ export class ProductService {
     return this.getByUrl(
       replaceUrlParameters(AppUrl.FIND_BY_PRODUCT_NAME, search)
     );
+  }
+
+  getProductById(id: number):Observable<ProductModel> {
+    return this.http.get<ProductModel>(AppUrl.PRODUCTS+'/'+id);
   }
 }

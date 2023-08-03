@@ -1,1 +1,31 @@
-<p>product-detail works!</p>
+<ng-container *ngIf="product">
+  <div class="flex-row">
+    <div class="flex-col">
+      <img
+        [src]="product.imageUrl"
+        [alt]="product.name"
+        class="product-img flex-extend"
+      />
+      <div class="flex-row mt-4">
+        <button href="#" class="btn btn-danger mx-2 btn-lg flex-extend">
+          <i class="fa fa-light fa-cart-shopping fa-xs"></i> Add to cart
+        </button>
+        <button href="#" class="btn btn-warning btn-lg flex-extend text-white">
+          <i class="fa fa-thin fa-bolt-lightning fa-2xs"></i> Buy now
+        </button>
+      </div>
+    </div>
+    <div class="product-info">
+      <h3 class="product-name">{{ product.name }}</h3>
+      <div class="price">{{ product.unitPrice | currency : "INR" }}</div>
+      <h4 class="section-title">Description</h4>
+      <p class="product-description">{{ product.description }}</p>
+    </div>
+  </div>
+</ng-container>
+
+<div class="back-button">
+  <button class="btn btn-primary btn-lg" routerLink="/product">
+    <i class="fa-solid fa-arrow-left mx-2"></i><span>Back to Product List</span>
+  </button>
+</div>

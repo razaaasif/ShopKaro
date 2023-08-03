@@ -19,3 +19,8 @@ export function safeTrim(str: string) {
   }
   return '';
 }
+
+
+export function isNullOrEmptyArray<T>(array:Array<T>):boolean{
+  return array == null || array.length === 0 ; 
+}

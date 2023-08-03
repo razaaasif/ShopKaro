@@ -7,6 +7,7 @@
 * {
   margin: 0;
   padding: 0;
+
   /* -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; */
@@ -17,7 +18,7 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 1.625;
-  color: #434141;
+  color: white;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -737,9 +738,9 @@ table.table.table-bordered th {
   font-weight: 500;
   color: black;
 }
-.detail-section {
-  margin-top: 60px;
-}
+
+
+
 /**/
 
 /* 

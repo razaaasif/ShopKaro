@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ProductService } from 'src/shared/services/product.service';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ProductModel } from 'src/shared/model/product.model';
+import { ProductService } from 'src/shared/services/product.service';
+import { isNullOrEmptyArray, unsubscribe } from 'src/shared/utils';
 import { LoggerService } from '../../shared/services/logger.service';
-import { ProductCategory } from '../../shared/model/product-category.model';
-import { Subscription, zip } from 'rxjs';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { unsubscribe } from 'src/shared/utils';
 
 @Component({
   selector: 'app-product-list',
@@ -18,6 +17,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private _subs: Array<Subscription> = new Array<Subscription>();
   private keyword?: string;
 
+  readonly isNullOrEmptyArray = isNullOrEmptyArray;
   constructor(
     private productService: ProductService,
     private logger: LoggerService,
