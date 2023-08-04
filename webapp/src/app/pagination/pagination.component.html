@@ -1,24 +1,37 @@
 <div class="footer-pagination mt-5 mb-2">
-  <div class="row">
-    <div class="col-md-6"></div>
-    <div class="col-md-3">
-      <div class="items">
-        <label>Item per page</label>
-        <select>
-          <option>10</option>
-          <option>20</option>
-          <option>30</option>
-          <option>40</option>
-        </select>
+  <div class="flex-row justify-content-end">
+    <div class="flex-row mr-4">
+      <div class="mx-4 my-1">
+        <div ngbDropdown class="d-inline-block">
+          <button
+            type="button"
+            class="btn btn-primary btn-lg"
+            id="dropdownBasic1"
+            ngbDropdownToggle
+          >
+            Items per page : {{ selectdValue }}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <ng-container *ngFor="let item of items">
+              <button class="btn btn-primary btn-lg" ngbDropdownItem (click)="selectdValue = item">
+                {{ item }}
+              </button>
+            </ng-container>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="col-md-2">
-      <div class="number">1 - 10 of 100</div>
-    </div>
-    <div class="col-md-1">
-      <div class="arrows">
-        <a href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
-        <a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+
+      <div class="flex-row" *ngIf="pageModel != null">
+        <div class="arrows">
+          <ngb-pagination
+            class="d-flex justify-content-end"
+            [collectionSize]="pageModel.totalElements"
+            [(page)]="pageModel.number"
+            [pageSize]="selectdValue"
+            size="lg"
+            (pageChange)="onChange($event)"
+          ></ngb-pagination>
+        </div>
       </div>
     </div>
   </div>

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { AppUrl } from '../../app/app-url';
+import { EmbededProductModel } from '../model/embeded.model';
 import { ProductCategory } from '../model/product-category.model';
 import { ProductModel } from '../model/product.model';
 import { replaceUrlParameters, safeTrim } from '../utils';
@@ -12,7 +13,6 @@ import { LoggerService } from './logger.service';
   providedIn: 'root',
 })
 export class ProductService {
-
   constructor(private http: HttpClient, private logger: LoggerService) {}
 
   getProductCategories(): Observable<Array<ProductCategory>> {
@@ -25,12 +25,14 @@ export class ProductService {
       .pipe(map((response) => response._embedded.productCategory));
   }
 
-  getProducts(): Observable<ProductModel[]> {
+  getProducts(): Observable<EmbededProductModel> {
     this.logger.debug('getProducts() starts');
     return this.getByUrl(AppUrl.PRODUCTS);
   }
 
-  getProductByCategoryId(id: number): Observable<Array<ProductModel>> {
+  getProductByCategoryId(
+    id: number
+  ): Observable<EmbededProductModel> {
     if (!isNaN(id)) {
       this.logger.debug('getProducts() id starts' + id);
       return this.getByUrl(
@@ -41,13 +43,11 @@ export class ProductService {
     }
   }
 
-  private getByUrl(URL: string): Observable<Array<ProductModel>> {
-    return this.http
-      .get<{ _embedded: { products: Array<ProductModel> } }>(URL)
-      .pipe(map((response) => response._embedded.products));
+  private getByUrl(URL: string): Observable<EmbededProductModel> {
+    return this.http.get<EmbededProductModel>(URL);
   }
 
-  getByKeyword(search: string): Observable<Array<ProductModel>> {
+  getByKeyword(search: string): Observable<EmbededProductModel> {
     this.logger.debug('getByKeyword() search' + search);
     if (safeTrim(search) === '') {
       return this.getProducts();
@@ -58,7 +58,7 @@ export class ProductService {
     );
   }
 
-  getProductById(id: number):Observable<ProductModel> {
-    return this.http.get<ProductModel>(AppUrl.PRODUCTS+'/'+id);
+  getProductById(id: number): Observable<ProductModel> {
+    return this.http.get<ProductModel>(AppUrl.PRODUCTS + '/' + id);
   }
 }

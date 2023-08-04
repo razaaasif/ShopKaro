@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { EmbededProductModel } from 'src/shared/model/embeded.model';
 import { ProductModel } from 'src/shared/model/product.model';
 import { ProductService } from 'src/shared/services/product.service';
 import { isNullOrEmptyArray, unsubscribe } from 'src/shared/utils';
+import { PageModel } from '../../shared/model/page.model';
 import { LoggerService } from '../../shared/services/logger.service';
 
 @Component({
@@ -18,6 +20,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private keyword?: string;
 
   readonly isNullOrEmptyArray = isNullOrEmptyArray;
+  public pageModel?: PageModel;
   constructor(
     private productService: ProductService,
     private logger: LoggerService,
@@ -72,20 +75,23 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.productService;
     this.productService
       .getProductByCategoryId(this.currentCategoryId)
-      .subscribe((products: ProductModel[]) => {
+      .subscribe((products: EmbededProductModel) => {
         this.logger.debug(
-          'loadByCategoryId() products -> ' + JSON.stringify(products)
+          'loadByCategoryId() products -> ' + JSON.stringify(products._embedded.products)
         );
         this.initProducts(products);
       });
   }
-  private initProducts(products: ProductModel[]): void {
-    this.logger.debug('initProducts() products -> ' + JSON.stringify(products));
-    this.products = products?.map((product) => {
+  initProducts(products: EmbededProductModel) {
+    this.logger.debug('initProducts() products -> ' + JSON.stringify(products._embedded.products));
+    this.logger.debug('initProducts() page -> ' + JSON.stringify(products.page));
+    this.pageModel = products.page;
+    this.products = products._embedded.products?.map((product) => {
       this.getOfferPrice(product);
       return product;
     });
   }
+ 
   public getOfferPrice(product: ProductModel): void {
     const randomPercentage = Math.floor(Math.random() * 10) + 1;
     product.off = randomPercentage * 10;

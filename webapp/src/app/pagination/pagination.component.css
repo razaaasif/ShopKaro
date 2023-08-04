@@ -1,0 +1,42 @@
+/* Basic styles for the custom select container */
+.custom-select {
+    position: relative;
+    display: inline-block;
+    font-family: Arial, sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  
+  /* Hiding the original select element */
+  .custom-select select {
+    display: none;
+  }
+  
+  /* Styling the arrow icon */
+  .custom-select::after {
+    content: '\25BC'; /* Downward arrow character */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+  
+  /* Styling options when the select is open */
+  .custom-select select:focus {
+    outline: none;
+  }
+  
+  /* Custom styles for options */
+  .custom-select option {
+    background-color: #fff;
+    color: #333;
+  }
+  
+  /* Style option on hover */
+  .custom-select option:hover {
+    background-color: #f2f2f2;
+  }
+  

@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import {
   HTTP_INTERCEPTORS,
   HttpClientModule
 } from '@angular/common/http';
+import '@angular/localize/init';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpInterceptorService } from '../shared/services/http-interceptor.service';
 import { AppComponent } from './app.component';
@@ -16,7 +18,6 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-
 const routes: Routes = [
   { path: 'category/:id', component: ProductListComponent },
   { path: 'products', component: ProductListComponent },
@@ -42,6 +43,7 @@ const routes: Routes = [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(routes, { useHash: true }),
+    NgbModule
   ],
   providers: [
     {
