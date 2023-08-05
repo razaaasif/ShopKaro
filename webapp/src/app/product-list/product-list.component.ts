@@ -5,7 +5,7 @@ import { EmbededProductModel } from 'src/shared/model/embeded.model';
 import { ProductModel } from 'src/shared/model/product.model';
 import { ProductService } from 'src/shared/services/product.service';
 import { isNullOrEmptyArray, unsubscribe } from 'src/shared/utils';
-import { PageModel } from '../../shared/model/page.model';
+import { PageModel, PageRequest } from '../../shared/model/page.model';
 import { LoggerService } from '../../shared/services/logger.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private keyword?: string;
 
   readonly isNullOrEmptyArray = isNullOrEmptyArray;
-  public pageModel?: PageModel;
+  public pageModel: PageModel = new PageModel(20, 0, 1, 1);
   constructor(
     private productService: ProductService,
     private logger: LoggerService,
@@ -41,12 +41,17 @@ export class ProductListComponent implements OnInit, OnDestroy {
   loadByKeyword(): void {
     this.keyword = this.activatedRoute.snapshot.paramMap.get('keyword')!;
     this.logger.debug('loadByKeyword() : -> ' + this.keyword);
-    this.productService.getByKeyword(this.keyword).subscribe((products) => {
-      this.logger.debug(
-        'loadByKeyword() products -> ' + JSON.stringify(products)
-      );
-      this.initProducts(products);
-    });
+    this.productService
+      .getByKeyword(this.keyword, this.getPageRequest())
+      .subscribe((products) => {
+        this.logger.debug(
+          'loadByKeyword() products -> ' + JSON.stringify(products)
+        );
+        this.initProducts(products);
+      });
+  }
+  getPageRequest(): PageRequest {
+    return new PageRequest(this.pageModel.size, this.pageModel.number - 1);
   }
 
   listProducts() {
@@ -63,38 +68,46 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
   }
   loadAllProducts() {
-    this.productService.getProducts().subscribe((products) => {
-      this.logger.debug(
-        'loadAllProducts() products -> ' + JSON.stringify(products)
-      );
-      this.initProducts(products);
-    });
+    this.productService
+      .getProducts(this.getPageRequest())
+      .subscribe((products) => {
+        this.logger.debug(
+          'loadAllProducts() products -> ' + JSON.stringify(products)
+        );
+        this.initProducts(products);
+      });
   }
   private loadByCategoryId(): void {
     this.currentCategoryId = +this.activatedRoute.snapshot.paramMap.get('id')!;
     this.productService;
     this.productService
-      .getProductByCategoryId(this.currentCategoryId)
+      .getProductByCategoryId(this.currentCategoryId, this.getPageRequest())
       .subscribe((products: EmbededProductModel) => {
         this.logger.debug(
-          'loadByCategoryId() products -> ' + JSON.stringify(products._embedded.products)
+          'loadByCategoryId() products -> ' +
+            JSON.stringify(products._embedded.products)
         );
         this.initProducts(products);
       });
   }
   initProducts(products: EmbededProductModel) {
-    this.logger.debug('initProducts() products -> ' + JSON.stringify(products._embedded.products));
-    this.logger.debug('initProducts() page -> ' + JSON.stringify(products.page));
+    this.logger.debug(
+      'initProducts() products -> ' +
+        JSON.stringify(products._embedded.products)
+    );
+    this.logger.debug(
+      'initProducts() page -> ' + JSON.stringify(products.page)
+    );
     this.pageModel = products.page;
+    this.pageModel.number = this.pageModel.number + 1;
     this.products = products._embedded.products?.map((product) => {
       this.getOfferPrice(product);
       return product;
     });
   }
- 
+
   public getOfferPrice(product: ProductModel): void {
-    const randomPercentage = Math.floor(Math.random() * 10) + 1;
-    product.off = randomPercentage * 10;
+    product.off = 1 * 10;
     product.newPrice = product.unitPrice * (1 - product.off / 100);
   }
 }

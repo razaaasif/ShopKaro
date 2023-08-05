@@ -34,9 +34,12 @@
           </div>
         </div>
       </div>
-    </div></ng-container
-  >
-  <app-pagination [pageModel]="pageModel"></app-pagination>
+    </div>
+  </ng-container>
+  <app-pagination
+    [pageModel]="pageModel"
+    (pageChange)="loadAllProducts()"
+  ></app-pagination>
 </div>
 
 <ng-template #noProductsFound>

@@ -1,6 +1,9 @@
 <div class="footer-pagination mt-5 mb-2">
   <div class="flex-row justify-content-end">
-    <div class="flex-row mr-4">
+    <div class="flex-row">
+      <div class="bg-info info-content">
+        <span>Totoal number of elements : {{pageModel?.totalElements}}</span>
+      </div>
       <div class="mx-4 my-1">
         <div ngbDropdown class="d-inline-block">
           <button
@@ -9,11 +12,19 @@
             id="dropdownBasic1"
             ngbDropdownToggle
           >
-            Items per page : {{ selectdValue }}
+            Items per page : {{ pageModel?.size }}
           </button>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <div
+            ngbDropdownMenu
+            aria-labelledby="dropdownBasic1"
+            *ngIf="pageModel"
+          >
             <ng-container *ngFor="let item of items">
-              <button class="btn btn-primary btn-lg" ngbDropdownItem (click)="selectdValue = item">
+              <button
+                class="btn btn-primary btn-lg"
+                ngbDropdownItem
+                (click)="onChangeItemsPerPage(item)"
+              >
                 {{ item }}
               </button>
             </ng-container>
@@ -27,7 +38,7 @@
             class="d-flex justify-content-end"
             [collectionSize]="pageModel.totalElements"
             [(page)]="pageModel.number"
-            [pageSize]="selectdValue"
+            [pageSize]="pageModel.size"
             size="lg"
             (pageChange)="onChange($event)"
           ></ngb-pagination>

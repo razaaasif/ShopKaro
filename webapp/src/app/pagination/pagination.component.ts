@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PageModel } from 'src/shared/model/page.model';
 
 @Component({
@@ -8,9 +8,24 @@ import { PageModel } from 'src/shared/model/page.model';
 })
 export class PaginationComponent {
   @Input({ required: true }) pageModel?: PageModel;
-  items = [20, 25, 30];
-  selectdValue = this.items[0];
-  public onChange(event:any){
+  @Output() pageChange: EventEmitter<PageModel> = new EventEmitter<PageModel>();
+
+  public items = [20, 25, 30];
+  constructor() {
+    if (this.pageModel) {
+      this.pageModel.size = 20;
+    }
+  }
+  public onChange(event: number) {
     console.log(event);
+    if (this.pageModel) {
+      this.pageChange.next(this.pageModel);
+    }
+  }
+  onChangeItemsPerPage(item: number) {
+    if (this.pageModel && this.pageModel.size !== item) {
+      this.pageModel.size = item;
+      this.onChange(0);
+    }
   }
 }

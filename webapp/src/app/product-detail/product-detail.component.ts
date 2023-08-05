@@ -11,7 +11,7 @@ import { unsubscribe } from 'src/shared/utils';
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css'],
 })
-export class ProductDetailComponent implements OnInit,OnDestroy {
+export class ProductDetailComponent implements OnInit, OnDestroy {
   public product?: ProductModel;
   private _sub: Array<Subscription> = new Array<Subscription>();
   constructor(
@@ -31,9 +31,17 @@ export class ProductDetailComponent implements OnInit,OnDestroy {
             .getProductById(productId)
             .subscribe((product: ProductModel) => {
               this.product = product;
+              this.getOfferPrice();
             });
         }
       })
     );
+  }
+  public getOfferPrice(): void {
+    if (this.product) {
+      this.product.off = 1 * 10;
+      this.product.newPrice =
+        this.product.unitPrice * (1 - this.product.off / 100);
+    }
   }
 }
