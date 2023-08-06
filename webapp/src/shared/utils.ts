@@ -20,7 +20,37 @@ export function safeTrim(str: string) {
   return '';
 }
 
+export function isNullOrEmptyArray<T>(array: Array<T>): boolean {
+  return array == null || array.length === 0;
+}
 
-export function isNullOrEmptyArray<T>(array:Array<T>):boolean{
-  return array == null || array.length === 0 ; 
+export function deepCopy<T>(oldObj: T, visited = new WeakMap<any, any>()): T {
+  if (oldObj && typeof oldObj === 'object') {
+    if (visited.has(oldObj)) {
+      return visited.get(oldObj); // Return previously visited object to handle circular references
+    }
+
+    const newObj = Array.isArray(oldObj)
+      ? []
+      : Object.create(Object.getPrototypeOf(oldObj));
+    visited.set(oldObj, newObj);
+
+    if (Array.isArray(oldObj)) {
+      for (const value of oldObj) {
+        newObj.push(deepCopy(value, visited));
+      }
+    } else if (oldObj instanceof Map) {
+      for (const [key, value] of oldObj.entries()) {
+        newObj.set(deepCopy(key, visited), deepCopy(value, visited));
+      }
+    } else {
+      for (const [key, value] of Object.entries(oldObj)) {
+        newObj[key] = deepCopy(value, visited);
+      }
+    }
+
+    return newObj as T;
+  } else {
+    return oldObj; // Return non-object values directly (e.g., numbers, strings, null, etc.)
+  }
 }

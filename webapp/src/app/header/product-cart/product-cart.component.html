@@ -1,0 +1,23 @@
+<div class="cart-area d-n">
+  <a href="shopping-detail.html">
+    <div class="total">
+      {{
+        cartStatus.price > 0
+          ? (cartStatus.price | number : "1.3-3" | currency : "INR")
+          : "0.000"
+      }}
+
+      <span>
+        {{ cartStatus.totoalNumber > 0 ? cartStatus.totoalNumber : "0" }}</span
+      >
+    </div>
+    <span class="badge circle">{{
+      cartStatus.totoalNumber > 0
+        ? cartStatus.totoalNumber > 99
+          ? "99+"
+          : cartStatus.totoalNumber
+        : 0
+    }}</span>
+    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+  </a>
+</div>

@@ -23,15 +23,9 @@
             >&nbsp;
             <span class="text-success">{{ product.off }}% off</span>
           </div>
-          <div class="flex-row">
-            <button href="#" class="btn btn-outline-info flex-extend">
-              Buy now
-            </button>
-
-            <button href="#" class="btn btn-info mx-2 flex-extend">
-              Add to cart
-            </button>
-          </div>
+          <app-product-action-button
+            [product]="product"
+          ></app-product-action-button>
         </div>
       </div>
     </div>

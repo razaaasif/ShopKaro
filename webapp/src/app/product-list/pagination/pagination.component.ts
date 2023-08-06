@@ -10,7 +10,7 @@ export class PaginationComponent {
   @Input({ required: true }) pageModel?: PageModel;
   @Output() pageChange: EventEmitter<PageModel> = new EventEmitter<PageModel>();
 
-  public items = [20, 25, 30];
+  public items = [5, 10, 20, 30, 40, 50];
   constructor() {
     if (this.pageModel) {
       this.pageModel.size = 20;
@@ -25,6 +25,7 @@ export class PaginationComponent {
   onChangeItemsPerPage(item: number) {
     if (this.pageModel && this.pageModel.size !== item) {
       this.pageModel.size = item;
+      this.pageModel.number = 1;
       this.onChange(0);
     }
   }

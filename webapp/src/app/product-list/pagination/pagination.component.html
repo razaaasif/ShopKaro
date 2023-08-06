@@ -2,7 +2,20 @@
   <div class="flex-row justify-content-end">
     <div class="flex-row">
       <div class="bg-info info-content">
-        <span>Totoal number of elements : {{pageModel?.totalElements}}</span>
+        <span>Totoal number of elements : {{ pageModel?.totalElements }}</span>
+      </div>
+      <div class="flex-row ml-4" *ngIf="pageModel != null">
+        <div class="arrows">
+          <ngb-pagination
+            class="d-flex justify-content-end"
+            [collectionSize]="pageModel.totalElements"
+            [(page)]="pageModel.number"
+            [pageSize]="pageModel.size"
+            size="lg"
+            (pageChange)="onChange($event)"
+            [maxSize]="5"
+          ></ngb-pagination>
+        </div>
       </div>
       <div class="mx-4 my-1">
         <div ngbDropdown class="d-inline-block">
@@ -29,19 +42,6 @@
               </button>
             </ng-container>
           </div>
-        </div>
-      </div>
-
-      <div class="flex-row" *ngIf="pageModel != null">
-        <div class="arrows">
-          <ngb-pagination
-            class="d-flex justify-content-end"
-            [collectionSize]="pageModel.totalElements"
-            [(page)]="pageModel.number"
-            [pageSize]="pageModel.size"
-            size="lg"
-            (pageChange)="onChange($event)"
-          ></ngb-pagination>
         </div>
       </div>
     </div>

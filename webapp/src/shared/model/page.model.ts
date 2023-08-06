@@ -4,11 +4,10 @@ export class PageModel {
     public totalElements: number,
     public totalPages: number,
     public number: number
-  ) {}
+  ) {
+    this.size = 10;
+  }
 }
 export class PageRequest {
-  constructor(
-    public size: number,
-    public number: number
-  ) {}
+  constructor(public size: number, public number: number) {}
 }

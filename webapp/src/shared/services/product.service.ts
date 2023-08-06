@@ -75,7 +75,9 @@ export class ProductService {
     return this.getProductByUrl(
       replaceUrlParameters(
         AppUrl.FIND_BY_PRODUCT_NAME,
-        search
+        search,
+        page.number,
+        page.size
       )
     );
   }
