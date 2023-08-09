@@ -36,4 +36,14 @@ export class LoggerService {
       console.info(...messages);
     }
   }
+
+  debugMap<K, V>(obj: Map<K, V>): void {
+    if (obj.size) {
+      for (const [key, value] of obj.entries()) {
+        this.debug(
+          '[ Key : ' + key + ', value : ' + JSON.stringify(value) + ']'
+        );
+      }
+    }
+  }
 }

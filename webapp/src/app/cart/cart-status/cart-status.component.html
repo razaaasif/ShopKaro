@@ -1,5 +1,5 @@
 <div class="cart-area d-n">
-  <a href="shopping-detail.html">
+  <a routerLink="/cart-details">
     <div class="total">
       {{
         cartStatus.price > 0
@@ -8,14 +8,14 @@
       }}
 
       <span>
-        {{ cartStatus.totoalNumber > 0 ? cartStatus.totoalNumber : "0" }}</span
+        {{ cartStatus.totalNumber > 0 ? cartStatus.totalNumber : "0" }}</span
       >
     </div>
     <span class="badge circle">{{
-      cartStatus.totoalNumber > 0
-        ? cartStatus.totoalNumber > 99
+      cartStatus.totalNumber > 0
+        ? cartStatus.totalNumber > 99
           ? "99+"
-          : cartStatus.totoalNumber
+          : cartStatus.totalNumber
         : 0
     }}</span>
     <i class="fa fa-shopping-cart" aria-hidden="true"></i>

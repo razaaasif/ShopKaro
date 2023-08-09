@@ -54,3 +54,11 @@ export function deepCopy<T>(oldObj: T, visited = new WeakMap<any, any>()): T {
     return oldObj; // Return non-object values directly (e.g., numbers, strings, null, etc.)
   }
 }
+
+export function nullSafeList<T>(obj: Array<T>): Array<T> {
+  return isNullOrEmptyArray(obj) ? new Array<T>() : obj;
+}
+
+export function nullSafeMap<K, V>(obj: Map<K, V>): Map<K, V> {
+  return obj != null && obj.size === 0 ? new Map<K, V>() : obj;
+}

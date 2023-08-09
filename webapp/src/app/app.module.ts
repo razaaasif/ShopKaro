@@ -7,10 +7,11 @@ import '@angular/localize/init';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpInterceptorService } from '../shared/services/http-interceptor.service';
 import { AppComponent } from './app.component';
+import { CartDetailsComponent } from './cart/cart-details/cart-details.component';
+import { CartStatusComponent } from './cart/cart-status/cart-status.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { ProductCartComponent } from './header/product-cart/product-cart.component';
 import { SearchComponent } from './header/search/search.component';
 import { PaginationComponent } from './product-list/pagination/pagination.component';
 import { ProductActionButtonComponent } from './product-list/product-action-button/product-action-button.component';
@@ -18,8 +19,9 @@ import { ProductDetailComponent } from './product-list/product-detail/product-de
 import { ProductListComponent } from './product-list/product-list.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 const routes: Routes = [
-  { path: 'category/:id', component: ProductListComponent },
   { path: 'products', component: ProductListComponent },
+  { path: 'cart-details', component: CartDetailsComponent },
+  { path: 'category/:id', component: ProductListComponent },
   { path: 'products/:id', component: ProductDetailComponent },
   { path: 'search/:keyword', component: ProductListComponent },
   { path: '', redirectTo: '/products', pathMatch: 'full' },
@@ -38,7 +40,8 @@ const routes: Routes = [
     SidebarComponent,
     SearchComponent,
     ProductActionButtonComponent,
-    ProductCartComponent,
+    CartStatusComponent,
+    CartDetailsComponent,
   ],
   imports: [
     BrowserModule,

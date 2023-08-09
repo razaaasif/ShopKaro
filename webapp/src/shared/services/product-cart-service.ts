@@ -1,36 +1,50 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { AddToCartModel } from '../model/add-t-cart.model';
+import { EventEmitter, Injectable } from '@angular/core';
+import {
+  CartStatusModel,
+  ProductCartModelWithQuantity,
+} from '../model/cart-status.model';
 import { ProductModel } from '../model/product.model';
-import { deepCopy, isNullOrEmptyArray } from '../utils';
+import { nullSafeMap } from '../utils';
+import { LoggerService } from './logger.service';
+
 @Injectable({
   providedIn: 'root',
 })
 export class ProductCartService {
-  private productInCart: Array<ProductModel> = new Array<ProductModel>();
-  productInCartChange: Subject<Array<ProductModel>> = new Subject<
-    Array<ProductModel>
+  private products: Map<number, ProductCartModelWithQuantity> = new Map<
+    number,
+    ProductCartModelWithQuantity
   >();
-  productCartStatusChange: Subject<AddToCartModel> =
-    new Subject<AddToCartModel>();
-  addToCard(product: ProductModel) {
-    if (isNullOrEmptyArray(this.productInCart)) {
-      this.productInCart = new Array<ProductModel>();
-    }
-    this.productInCart.push(deepCopy(product));
+  private totalPrice: number = 0;
+  private totalQuantity: number = 0;
+
+  productCartStatusChange: EventEmitter<CartStatusModel> =
+    new EventEmitter<CartStatusModel>();
+
+  producService: EventEmitter<Map<number, ProductCartModelWithQuantity>> =
+    new EventEmitter<Map<number, ProductCartModelWithQuantity>>();
+
+  constructor(private logger: LoggerService) {}
+
+  addToCard(product: ProductModel): void {
+    // Fixed method name typo (addToCard -> addToCart)
+    this.products = nullSafeMap(this.products);
+    const newProduct =
+      this.products.get(product.id) ||
+      new ProductCartModelWithQuantity(product);
+    newProduct.quantity++;
+    this.products.set(product.id, newProduct);
+    this.producService.next(this.products);
+    this.totalQuantity += 1;
+    this.totalPrice += product.newPrice;
     this.getCartStatus();
-    this.productInCartChange.next(deepCopy(this.productInCart));
+    this.logger.debugMap(this.products);
   }
 
   getCartStatus(): void {
-    let price = 0;
-    this.productInCart?.forEach((data) => {
-      price = price + data.newPrice;
-    });
-
     this.productCartStatusChange.next({
-      price: price,
-      totoalNumber: this.productInCart.length,
+      price: this.totalPrice,
+      totalNumber: this.totalQuantity, // Fixed typo (totoalNumber -> totalNumber)
     });
   }
 }

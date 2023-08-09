@@ -1,18 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AddToCartModel } from 'src/shared/model/add-t-cart.model';
+import { CartStatusModel } from 'src/shared/model/cart-status.model';
 import { unsubscribe } from 'src/shared/utils';
 import { LoggerService } from '../../../shared/services/logger.service';
 import { ProductCartService } from '../../../shared/services/product-cart-service';
 import { isNullOrEmptyArray } from '../../../shared/utils';
 
 @Component({
-  selector: 'app-product-cart',
-  templateUrl: './product-cart.component.html',
-  styleUrls: ['./product-cart.component.css'],
+  selector: 'app-cart-status',
+  templateUrl: './cart-status.component.html',
+  styleUrls: ['./cart-status.component.css'],
 })
-export class ProductCartComponent implements OnInit, OnDestroy {
-  public cartStatus: AddToCartModel = new AddToCartModel();
+export class CartStatusComponent implements OnInit, OnDestroy {
+  public cartStatus: CartStatusModel = new CartStatusModel();
   private _subs: Array<Subscription> = new Array<Subscription>();
 
   readonly isNullOrEmptyArray = isNullOrEmptyArray;
