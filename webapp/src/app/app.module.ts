@@ -3,8 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import '@angular/localize/init';
 import { RouterModule, Routes } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
 import { HttpInterceptorService } from '../shared/services/http-interceptor.service';
 import { AppComponent } from './app.component';
 import { CartDetailsComponent } from './cart/cart-details/cart-details.component';
@@ -18,6 +23,7 @@ import { ProductActionButtonComponent } from './product-list/product-action-butt
 import { ProductDetailComponent } from './product-list/product-detail/product-detail.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+
 const routes: Routes = [
   { path: 'products', component: ProductListComponent },
   { path: 'cart-details', component: CartDetailsComponent },
@@ -46,6 +52,13 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
+    ButtonModule,
+    InputNumberModule,
+    InputTextModule,
+    FormsModule,
+    ButtonModule,
+
+    RippleModule,
     RouterModule.forRoot(routes, { useHash: true }),
     NgbModule,
   ],

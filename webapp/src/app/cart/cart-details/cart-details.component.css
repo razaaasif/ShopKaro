@@ -1,0 +1,11 @@
+img {
+  max-height: 150px !important;
+  max-width: 200px;
+}
+.row-70 {
+  width: 60%;
+}
+
+.row-30 {
+  width: 30%;
+}

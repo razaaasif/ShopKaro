@@ -1,50 +1,46 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import {
-  CartStatusModel,
-  ProductCartModelWithQuantity,
-} from '../model/cart-status.model';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { CartModel, CartStatusModel } from '../model/cart-status.model';
 import { ProductModel } from '../model/product.model';
-import { nullSafeMap } from '../utils';
-import { LoggerService } from './logger.service';
+import { deepCopy, nullSafeMap } from '../utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductCartService {
-  private products: Map<number, ProductCartModelWithQuantity> = new Map<
-    number,
-    ProductCartModelWithQuantity
-  >();
+  private products: Map<number, CartModel> = new Map<number, CartModel>();
   private totalPrice: number = 0;
   private totalQuantity: number = 0;
 
-  productCartStatusChange: EventEmitter<CartStatusModel> =
-    new EventEmitter<CartStatusModel>();
+  private productCartStatusSubject: BehaviorSubject<CartStatusModel> =
+    new BehaviorSubject<CartStatusModel>({
+      price: this.totalPrice,
+      totalNumber: this.totalQuantity,
+    });
+  private producSubject: BehaviorSubject<Array<CartModel>> =
+    new BehaviorSubject<Array<CartModel>>(new Array<CartModel>());
 
-  producService: EventEmitter<Map<number, ProductCartModelWithQuantity>> =
-    new EventEmitter<Map<number, ProductCartModelWithQuantity>>();
+  productCartStatus$: Observable<CartStatusModel> =
+    this.productCartStatusSubject.asObservable();
+  producService$: Observable<Array<CartModel>> =
+    this.producSubject.asObservable();
 
-  constructor(private logger: LoggerService) {}
-
-  addToCard(product: ProductModel): void {
-    // Fixed method name typo (addToCard -> addToCart)
+  addToCart(product: ProductModel): void {
     this.products = nullSafeMap(this.products);
-    const newProduct =
-      this.products.get(product.id) ||
-      new ProductCartModelWithQuantity(product);
+    const newProduct = this.products.get(product.id) || new CartModel(product);
     newProduct.quantity++;
     this.products.set(product.id, newProduct);
-    this.producService.next(this.products);
     this.totalQuantity += 1;
     this.totalPrice += product.newPrice;
-    this.getCartStatus();
-    this.logger.debugMap(this.products);
+    this.emitCartChanges();
   }
 
-  getCartStatus(): void {
-    this.productCartStatusChange.next({
+  private emitCartChanges(): void {
+    this.producSubject.next(deepCopy(Array.from(this.products.values())));
+
+    this.productCartStatusSubject.next({
       price: this.totalPrice,
-      totalNumber: this.totalQuantity, // Fixed typo (totoalNumber -> totalNumber)
+      totalNumber: this.totalQuantity,
     });
   }
 }

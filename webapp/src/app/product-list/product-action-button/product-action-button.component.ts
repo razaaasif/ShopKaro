@@ -25,7 +25,7 @@ export class ProductActionButtonComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
   addToCart(): void {
-    this.productCartService.addToCard(this.product);
+    this.productCartService.addToCart(this.product);
   }
   buyNow(): void {}
 }

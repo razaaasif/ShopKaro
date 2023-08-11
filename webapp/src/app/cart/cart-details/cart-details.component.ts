@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ProductCartModelWithQuantity } from 'src/shared/model/cart-status.model';
+import { CartModel } from 'src/shared/model/cart-status.model';
 import { LoggerService } from 'src/shared/services/logger.service';
-import { deepCopy } from 'src/shared/utils';
 import { ProductCartService } from '../../../shared/services/product-cart-service';
 
 @Component({
@@ -10,25 +9,51 @@ import { ProductCartService } from '../../../shared/services/product-cart-servic
   templateUrl: './cart-details.component.html',
   styleUrls: ['./cart-details.component.css'],
 })
-export class CartDetailsComponent implements OnInit {
-  private _subs: Array<Subscription> = new Array<Subscription>();
-  data: Map<number, ProductCartModelWithQuantity> = new Map<
-    number,
-    ProductCartModelWithQuantity
-  >();
-  products: Array<ProductCartModelWithQuantity>;
+export class CartDetailsComponent implements OnInit, OnDestroy {
+  private _subs: Array<Subscription> = [];
+  public products: CartModel[] = [
+    {
+      quantity: 1,
+      id: 2,
+      name: 'Become a Guru in JavaScript',
+      price: 18.891,
+      imageUrl: 'assets/images/products/books/book-luv2code-1001.png',
+      off: 10,
+    },
+  ];
+  public isLoaded = false;
 
   constructor(
     private productCartService: ProductCartService,
     private logger: LoggerService
   ) {}
+
   ngOnInit(): void {
     this._subs.push(
-      this.productCartService.producService.subscribe((datas) => {
-        this.logger.debug('CartDetailsComponent');
-        this.logger.debugMap(datas);
-        this.data = deepCopy(datas);
+      this.productCartService.producService$.subscribe((data) => {
+        this.products = data;
+        this.isLoaded = true;
+        this.logger.debug(
+          'CartDetailsComponent ngOnInit() cartStatus: ' +
+            JSON.stringify(this.products)
+        );
+        if (this.products != null && this.products.length === 0) {
+          this.products = [
+            {
+              quantity: 1,
+              id: 2,
+              name: 'Become a Guru in JavaScript',
+              price: 18.891,
+              imageUrl: 'assets/images/products/books/book-luv2code-1001.png',
+              off: 10,
+            },
+          ];
+        }
       })
     );
+  }
+
+  ngOnDestroy(): void {
+    this._subs.forEach((sub) => sub.unsubscribe());
   }
 }

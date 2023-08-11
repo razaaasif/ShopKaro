@@ -11,6 +11,7 @@ export class CartModel {
   price: number;
   imageUrl: string;
   off: number;
+  quantity: number = 0;
   constructor(product: ProductModel = null) {
     if (product != null) {
       this.id = product.id;
@@ -19,13 +20,5 @@ export class CartModel {
       this.imageUrl = product.imageUrl;
       this.off = product.off;
     }
-  }
-}
-
-export class ProductCartModelWithQuantity {
-  product: CartModel;
-  quantity: number = 0;
-  constructor(product: ProductModel) {
-    this.product = new CartModel(product);
   }
 }

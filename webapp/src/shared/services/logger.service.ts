@@ -37,11 +37,14 @@ export class LoggerService {
     }
   }
 
-  debugMap<K, V>(obj: Map<K, V>): void {
+  debugMap<K, V>(obj: Map<K, V>, from: string = null): void {
     if (obj.size) {
       for (const [key, value] of obj.entries()) {
         this.debug(
-          '[ Key : ' + key + ', value : ' + JSON.stringify(value) + ']'
+          `${from}
+          [ Key : ${key} , 
+            value : ${JSON.stringify(value)}
+          ]`
         );
       }
     }

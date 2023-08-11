@@ -1,14 +1,27 @@
-<table class="table">
-  <tbody>
-    <tr>
-      <td *ngFor="let val of products">
-        {{ val | json }}
-      </td>
-
-      <td>ass</td>
-      <td *ngFor="let val of products">
-        {{ val | json }}
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="flex-row justify-content-center">
+  <div
+    class="flex-col row-70 bg-white p-2 product-width"
+    *ngFor="let product of products"
+  >
+    <a routerLink="/">
+      <img class="flex mt-auto" [src]="product.imageUrl" alt="product.name" />
+      <div>
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Secondary"
+          class="p-button-rounded p-button-secondary"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-check"
+          class="p-button-rounded p-button-text"
+        ></button>
+      </div>
+    </a>
+  </div>
+  <div class="flex-col row-30 bg-white ml-2">PRICE DETAILS</div>
+</div>

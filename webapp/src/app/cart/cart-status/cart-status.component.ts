@@ -27,11 +27,17 @@ export class CartStatusComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._subs.push(
-      this.productCartService.productCartStatusChange.subscribe((data) => {
+      this.productCartService.productCartStatus$.subscribe((data) => {
         this.cartStatus = data;
         this.logger.debug(
           'ProductCartComponent ngOnInit() cartStatus: ' +
             JSON.stringify(this.cartStatus)
+        );
+      }),
+      this.productCartService.producService$.subscribe((data) => {
+        this.logger.debug(
+          'ProductCartComponent ngOnInit() producService: ' +
+            JSON.stringify(data)
         );
       })
     );
