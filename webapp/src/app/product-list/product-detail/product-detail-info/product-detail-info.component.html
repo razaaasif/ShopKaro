@@ -1,0 +1,22 @@
+<div [ngClass]="'product-info ' + styles">
+  <h3
+    routerLink="/products/{{ product.id }}"
+    [ngStyle]="pointer ? { cursor: 'pointer' } : {}"
+    class="product-name"
+  >
+    {{ product.name }}
+  </h3>
+  <div class="price mb-1">
+    {{ product.newPrice | currency : "INR" }}
+
+    <del class="text-muted">{{
+      product.unitPrice * unit | currency : "INR"
+    }}</del
+    >&nbsp;
+    <span class="text-success">{{ product.off }}% off</span>
+  </div>
+  <h4 class="section-title">Description</h4>
+  <p class="product-description">
+    {{ product.description | truncate : limit }}
+  </p>
+</div>

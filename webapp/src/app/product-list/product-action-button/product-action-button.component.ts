@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProductModel } from 'src/shared/model/product.model';
 import { LoggerService } from 'src/shared/services/logger.service';
@@ -17,7 +18,8 @@ export class ProductActionButtonComponent implements OnInit, OnDestroy {
   private _subs: Array<Subscription> = new Array<Subscription>();
   constructor(
     private productCartService: ProductCartService,
-    private logger: LoggerService
+    private logger: LoggerService,
+    private router: Router
   ) {}
   ngOnDestroy(): void {
     unsubscribe(this._subs);
@@ -25,7 +27,10 @@ export class ProductActionButtonComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
   addToCart(): void {
-    this.productCartService.addToCart(this.product);
+    this.productCartService.increment(this.product);
   }
-  buyNow(): void {}
+  buyNow(): void {
+    this.addToCart();
+    this.router.navigate(['/cart-details']);
+  }
 }

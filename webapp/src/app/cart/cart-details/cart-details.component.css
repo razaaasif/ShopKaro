@@ -4,8 +4,55 @@ img {
 }
 .row-70 {
   width: 60%;
+  top: 0;
+  bottom: 5rem;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
 }
 
 .row-30 {
-  width: 30%;
+  width: 20%;
+}
+.narrow-input {
+  width: 80px; /* Adjust the width as needed */
+  border: 1px solid #2196f3;
+  padding-left: 2rem;
+  padding-right: 1rem;
+  font-size: 1rem;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+    box-shadow 0.2s;
+  color: #2196f3;
+  background-color: transparent;
+  border: 1px solid;
+}
+
+.no-spinner-input::-webkit-inner-spin-button,
+.no-spinner-input::-webkit-outer-spin-button {
+  display: none;
+}
+
+.price-details-items {
+  color: rgb(171, 166, 166);
+  display: flex;
+  text-align: center;
+  margin: 1rem;
+}
+
+.price-details {
+  height: 300px;
+  position: fixed;
+  right: 10rem;
+}
+
+.price-detail-info {
+  border-bottom: 1px dashed rgb(168, 166, 166);
+}
+
+.saving-message {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 1.25rem;
+  margin-bottom: auto;
+  margin-top: auto;
 }

@@ -10,6 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
+import { TruncatePipe } from 'src/shared/truncate.pipe';
 import { HttpInterceptorService } from '../shared/services/http-interceptor.service';
 import { AppComponent } from './app.component';
 import { CartDetailsComponent } from './cart/cart-details/cart-details.component';
@@ -20,6 +21,7 @@ import { HeaderComponent } from './header/header.component';
 import { SearchComponent } from './header/search/search.component';
 import { PaginationComponent } from './product-list/pagination/pagination.component';
 import { ProductActionButtonComponent } from './product-list/product-action-button/product-action-button.component';
+import { ProductDetailInfoComponent } from './product-list/product-detail/product-detail-info/product-detail-info.component';
 import { ProductDetailComponent } from './product-list/product-detail/product-detail.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -48,6 +50,8 @@ const routes: Routes = [
     ProductActionButtonComponent,
     CartStatusComponent,
     CartDetailsComponent,
+    ProductDetailInfoComponent,
+    TruncatePipe,
   ],
   imports: [
     BrowserModule,

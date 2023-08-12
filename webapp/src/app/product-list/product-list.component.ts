@@ -4,7 +4,11 @@ import { Subscription } from 'rxjs';
 import { EmbededProductModel } from 'src/shared/model/embeded.model';
 import { ProductModel } from 'src/shared/model/product.model';
 import { ProductService } from 'src/shared/services/product.service';
-import { isNullOrEmptyArray, unsubscribe } from 'src/shared/utils';
+import {
+  isNullOrEmptyArray,
+  setOfferPrice,
+  unsubscribe,
+} from 'src/shared/utils';
 import { PageModel, PageRequest } from '../../shared/model/page.model';
 import { LoggerService } from '../../shared/services/logger.service';
 
@@ -101,13 +105,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.pageModel = products.page;
     this.pageModel.number = this.pageModel.number + 1;
     this.products = products._embedded.products?.map((product) => {
-      this.getOfferPrice(product);
+      setOfferPrice(product);
       return product;
     });
-  }
-
-  public getOfferPrice(product: ProductModel): void {
-    product.off = 1 * 10;
-    product.newPrice = product.unitPrice * (1 - product.off / 100);
   }
 }

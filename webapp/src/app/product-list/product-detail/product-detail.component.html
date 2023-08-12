@@ -11,18 +11,11 @@
         [product]="product"
       ></app-product-action-button>
     </div>
-    <div class="product-info">
-      <h3 class="product-name">{{ product.name }}</h3>
-      <div class="price mb-1">
-        {{ product.newPrice | currency : "INR" }}
 
-        <del class="text-muted">{{ product.unitPrice | currency : "INR" }}</del
-        >&nbsp;
-        <span class="text-success">{{ product.off }}% off</span>
-      </div>
-      <h4 class="section-title">Description</h4>
-      <p class="product-description">{{ product.description }}</p>
-    </div>
+    <app-product-detail-info
+      [product]="product"
+      [unit]="1"
+    ></app-product-detail-info>
   </div>
 </ng-container>
 
