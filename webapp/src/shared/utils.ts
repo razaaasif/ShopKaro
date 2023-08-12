@@ -1,4 +1,6 @@
 import { Subscription } from 'rxjs';
+import { CartModel } from './model/cart-status.model';
+import { ProductModel } from './model/product.model';
 export function replaceUrlParameters(
   url: string,
   ...dynamicValues: any[]
@@ -53,4 +55,12 @@ export function nullSafeList<T>(obj: Array<T>): Array<T> {
 
 export function nullSafeMap<K, V>(obj: Map<K, V>): Map<K, V> {
   return obj != null && obj.size === 0 ? new Map<K, V>() : obj;
+}
+
+export function setOfferPrice(
+  product: ProductModel | CartModel,
+  unit: number = 1
+): void {
+  product.off = 1 * 10;
+  product.newPrice = product.unitPrice * unit * (1 - product.off / 100);
 }

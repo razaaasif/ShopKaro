@@ -1,16 +1,12 @@
-export class ProductModel {
-  constructor(
-    public id: number,
-    public sku: string,
-    public name: string,
-    public description: string,
-    public unitPrice: number,
-    public newPrice: number,
-    public imageUrl: string,
-    public active: boolean,
-    public unitsInStock: string,
-    public dateCreated: Date,
-    public lastUpdated: Date,
-    public off: number
-  ) {}
+import { CartModel } from './cart-status.model';
+
+export class ProductModel extends CartModel {
+  public sku: string;
+  public active: boolean;
+  public dateCreated: Date;
+  public lastUpdated: Date;
+  constructor() {
+    super();
+    this.quantity = 1;
+  }
 }
