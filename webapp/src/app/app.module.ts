@@ -3,10 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import '@angular/localize/init';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { FieldsetModule } from 'primeng/fieldset';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
@@ -28,6 +32,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 
 const routes: Routes = [
   { path: 'products', component: ProductListComponent },
+  { path: 'checkout', component: CheckoutComponent },
   { path: 'cart-details', component: CartDetailsComponent },
   { path: 'category/:id', component: ProductListComponent },
   { path: 'products/:id', component: ProductDetailComponent },
@@ -61,10 +66,14 @@ const routes: Routes = [
     InputTextModule,
     FormsModule,
     ButtonModule,
-
+    ReactiveFormsModule,
     RippleModule,
+    FieldsetModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(routes, { useHash: true }),
     NgbModule,
+    CheckboxModule,
+    DropdownModule,
   ],
   providers: [
     {
