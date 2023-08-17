@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductCategory } from '../../shared/model/product-category.model';
-import { ProductService } from '../../shared/services/product.service';
-import { LoggerService } from '../../shared/services/logger.service';
+import { ProductCategory } from 'src/shared/model/product-category.model';
+import { LoggerService } from 'src/shared/services/logger.service';
+import { ProductService } from 'src/shared/services/product.service';
 
 @Component({
   selector: 'app-sidebar',

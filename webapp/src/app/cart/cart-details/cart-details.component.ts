@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CartModel, CartStatusModel } from 'src/shared/model/cart-status.model';
 import { LoggerService } from 'src/shared/services/logger.service';
+import { ProductCartService } from 'src/shared/services/product-cart-service';
 import { deepCopy } from 'src/shared/utils';
-import { ProductCartService } from '../../../shared/services/product-cart-service';
 
 @Component({
   selector: 'app-cart-details',

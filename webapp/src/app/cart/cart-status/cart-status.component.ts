@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CartStatusModel } from 'src/shared/model/cart-status.model';
+import { LoggerService } from 'src/shared/services/logger.service';
+import { ProductCartService } from 'src/shared/services/product-cart-service';
 import { unsubscribe } from 'src/shared/utils';
-import { LoggerService } from '../../../shared/services/logger.service';
-import { ProductCartService } from '../../../shared/services/product-cart-service';
 import { isNullOrEmptyArray } from '../../../shared/utils';
 
 @Component({

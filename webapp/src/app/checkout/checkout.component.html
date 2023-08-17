@@ -237,7 +237,7 @@
               <div class="input-space">
                 <p-dropdown
                   [style]="{ minWidth: '100%', borderRadius: '40px' }"
-                  [options]="[]"
+                  [options]="months"
                 ></p-dropdown>
               </div>
             </div>
@@ -250,7 +250,8 @@
               <div class="input-space">
                 <p-dropdown
                   [style]="{ minWidth: '100%', borderRadius: '40px' }"
-                  [options]="[]"
+                  [options]="years"
+                  (onChange)="onChangeYear($event)"
                 ></p-dropdown>
               </div>
             </div>

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { EmbededProductModel } from 'src/shared/model/embeded.model';
 import { ProductModel } from 'src/shared/model/product.model';
+import { LoggerService } from 'src/shared/services/logger.service';
 import { ProductService } from 'src/shared/services/product.service';
 import {
   isNullOrEmptyArray,
@@ -10,7 +11,6 @@ import {
   unsubscribe,
 } from 'src/shared/utils';
 import { PageModel, PageRequest } from '../../shared/model/page.model';
-import { LoggerService } from '../../shared/services/logger.service';
 
 @Component({
   selector: 'app-product-list',
