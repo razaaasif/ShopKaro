@@ -46,6 +46,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void exposeId(RepositoryRestConfiguration config) {
 
 		Set<EntityType<?>> entities = this.entityManager.getMetamodel().getEntities();
