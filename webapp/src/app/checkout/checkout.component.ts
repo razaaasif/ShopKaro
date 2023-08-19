@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Country } from 'country-state-city';
 import { Subscription } from 'rxjs';
+import { CountryModel } from 'src/shared/model/country.model';
+import { StateModel } from 'src/shared/model/state.model';
 import { FormServiceService } from 'src/shared/services/form-service.service';
 import { LoggerService } from 'src/shared/services/logger.service';
 
@@ -12,8 +13,8 @@ import { LoggerService } from 'src/shared/services/logger.service';
 })
 export class CheckoutComponent implements OnInit {
   private _subs: Array<Subscription> = new Array<Subscription>();
-  countries = Country.getAllCountries();
-
+  countries: Array<CountryModel> = new Array<CountryModel>();
+  states: Array<StateModel> = new Array<StateModel>();
   public checkOutFormGroup: FormGroup;
   public totalPrice: number = 0;
   public totalQuantity: number = 0;
@@ -60,18 +61,21 @@ export class CheckoutComponent implements OnInit {
         .getCreditCardMonths(new Date().getMonth() + 1)
         .subscribe((months) => {
           this.months = months;
-          this.logger.debug('Months: -> ' + this.months);
+          this.logger.debug('ngOnInit Months: -> ' + this.months);
         }),
       this.formService.getCreditCardYears().subscribe((years) => {
         this.years = years;
-        this.logger.debug('Years: -> ' + this.years);
+        this.logger.debug('ngOnInit Years: -> ' + this.years);
+      }),
+      this.formService.getCountries().subscribe((countries) => {
+        this.countries = countries.map((country) => {
+          country.label = `${country.code} - ${country.name}`;
+          return country;
+        });
+        this.logger.debug(
+          'ngOnInit countries: -> ' + JSON.stringify(this.countries)
+        );
       })
-    );
-
-    this.logger.debug('country > ' + JSON.stringify(this.countries));
-    this.logger.debug(
-      'country code > ' +
-        JSON.stringify(Country.getCountryByCode(this.countries[0].isoCode))
     );
   }
 

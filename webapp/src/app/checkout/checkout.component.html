@@ -46,10 +46,14 @@
             </div>
             <div class="col-md-6">
               <div class="input-space">
-                <p-dropdown
-                  [style]="{ minWidth: '100%', borderRadius: '40px' }"
-                  [options]="[]"
-                ></p-dropdown>
+                <select formControlName="country" class="form-control">
+                  <option
+                    *ngFor="let country of countries"
+                    [ngValue]="country.name"
+                  >
+                    {{ country.label }}
+                  </option>
+                </select>
               </div>
             </div>
           </div>
@@ -76,10 +80,31 @@
             </div>
             <div class="col-md-6">
               <div class="input-space">
-                <p-dropdown
-                  [style]="{ minWidth: '100%', borderRadius: '40px' }"
-                  [options]="[]"
-                ></p-dropdown>
+                <input
+                  pInputText
+                  formControlName="city"
+                  type="text"
+                  class="form-group"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2">
+              <label>State</label>
+            </div>
+            <div class="col-md-6">
+              <div class="input-space">
+                <select
+                  formControlName="state"
+                  class="form-control"
+                  [attr.disabled]="true"
+                >
+                  <option *ngFor="let state of states" [ngValue]="state.name">
+                    {{ state.label }}
+                  </option>
+                </select>
               </div>
             </div>
           </div>
@@ -121,10 +146,14 @@
             </div>
             <div class="col-md-6">
               <div class="input-space">
-                <p-dropdown
-                  [style]="{ minWidth: '100%', borderRadius: '40px' }"
-                  [options]="[]"
-                ></p-dropdown>
+                <select formControlName="country" class="form-control">
+                  <option
+                    *ngFor="let country of countries"
+                    [ngValue]="country.name"
+                  >
+                    {{ country.label }}
+                  </option>
+                </select>
               </div>
             </div>
           </div>
@@ -144,17 +173,32 @@
               </div>
             </div>
           </div>
-
           <div class="row">
             <div class="col-md-2">
               <label>City</label>
             </div>
             <div class="col-md-6">
               <div class="input-space">
-                <p-dropdown
-                  [style]="{ minWidth: '100%', borderRadius: '40px' }"
-                  [options]="[]"
-                ></p-dropdown>
+                <input
+                  pInputText
+                  formControlName="city"
+                  type="text"
+                  class="form-group"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label>State</label>
+            </div>
+            <div class="col-md-6">
+              <div class="input-space">
+                <select formControlName="state" class="form-control">
+                  <option *ngFor="let state of states" [ngValue]="state.name">
+                    {{ state.label }}
+                  </option>
+                </select>
               </div>
             </div>
           </div>
@@ -183,10 +227,14 @@
             </div>
             <div class="col-md-6">
               <div class="input-space">
-                <p-dropdown
-                  [style]="{ minWidth: '100%', borderRadius: '40px' }"
-                  [options]="['visa', 'masterCard']"
-                ></p-dropdown>
+                <select formControlName="cardType" class="form-control">
+                  <option
+                    *ngFor="let card of ['visa', 'masterCard']"
+                    [ngValue]="card"
+                  >
+                    {{ card }}
+                  </option>
+                </select>
               </div>
             </div>
           </div>
@@ -235,10 +283,11 @@
             </div>
             <div class="col-md-6">
               <div class="input-space">
-                <p-dropdown
-                  [style]="{ minWidth: '100%', borderRadius: '40px' }"
-                  [options]="months"
-                ></p-dropdown>
+                <select formControlName="expirationMonth" class="form-control">
+                  <option *ngFor="let month of months" [ngValue]="month">
+                    {{ month }}
+                  </option>
+                </select>
               </div>
             </div>
           </div>
@@ -248,11 +297,15 @@
             </div>
             <div class="col-md-6">
               <div class="input-space">
-                <p-dropdown
-                  [style]="{ minWidth: '100%', borderRadius: '40px' }"
-                  [options]="years"
-                  (onChange)="onChangeYear($event)"
-                ></p-dropdown>
+                <select formControlName="expirationMonth" class="form-control">
+                  <option
+                    *ngFor="let year of years"
+                    (onChange)="onChangeYear($event)"
+                    [ngValue]="year"
+                  >
+                    {{ year }}
+                  </option>
+                </select>
               </div>
             </div>
           </div>

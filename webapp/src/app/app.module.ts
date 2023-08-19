@@ -14,8 +14,8 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
+import { TruncatePipe } from 'src/shared/pipes/truncate.pipe';
 import { HttpInterceptorService } from 'src/shared/services/http-interceptor.service';
-import { TruncatePipe } from 'src/shared/truncate.pipe';
 import { AppComponent } from './app.component';
 import { CartDetailsComponent } from './cart/cart-details/cart-details.component';
 import { CartStatusComponent } from './cart/cart-status/cart-status.component';
@@ -74,6 +74,7 @@ const routes: Routes = [
     NgbModule,
     CheckboxModule,
     DropdownModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {
