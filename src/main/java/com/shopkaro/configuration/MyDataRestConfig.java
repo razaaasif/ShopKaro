@@ -1,6 +1,7 @@
 package com.shopkaro.configuration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -13,8 +14,10 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
+import com.shopkaro.entity.Country;
 import com.shopkaro.entity.Product;
 import com.shopkaro.entity.ProductCatogory;
+import com.shopkaro.entity.State;
 
 @Configuration
 public class MyDataRestConfig implements RepositoryRestConfigurer {
@@ -29,8 +32,10 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
 		// TODO Auto-generated method stub
 		HttpMethod[] toDisable = { HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE };
-		this.disableMethods(config, toDisable, Product.class);
-		this.disableMethods(config, toDisable, ProductCatogory.class);
+		List<Class<?>> s = Arrays.asList(Product.class, ProductCatogory.class, Country.class, State.class);
+		for (Class<?> cls : s) {
+			this.disableMethods(config, toDisable, cls);
+		}
 
 	}
 
