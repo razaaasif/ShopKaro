@@ -40,13 +40,6 @@ export class CheckoutComponent implements OnInit {
         state: [''],
         zipCode: [''],
       }),
-      billingAddress: this.formBuilder.group({
-        country: [''],
-        street: [''],
-        city: [''],
-        state: [''],
-        zipCode: [''],
-      }),
       creditCard: this.formBuilder.group({
         cardType: [''],
         nameOnCard: [''],
@@ -103,14 +96,17 @@ export class CheckoutComponent implements OnInit {
     console.log(this.checkOutFormGroup.getRawValue());
   }
 
-  checked(event: boolean): void {
-    console.log('checked : ' + JSON.stringify(event));
-    if (event) {
-      this.checkOutFormGroup.controls['billingAddress'].setValue(
-        this.checkOutFormGroup.controls['shippingAddress'].value
-      );
-    } else {
-      this.checkOutFormGroup.controls['billingAddress'].reset();
-    }
+  getState(address: Event): void {
+    const selectedCountry = (address.target as HTMLSelectElement).value;
+    const index =  selectedCountry.split(":")[0];
+      console.log('getState() address ->' + JSON.stringify(this.countries[index]));
+   const code =  this.countries[index].code;
+    this.formService.getStates(code).subscribe((states) => {
+      console.log('getState() Response states: ' + JSON.stringify( states));
+      this.states = states.map((state) => {
+        state.label =  state.name;
+        return state;
+      });
+    });
   }
 }

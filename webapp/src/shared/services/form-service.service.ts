@@ -36,9 +36,7 @@ export class FormServiceService {
   getStates(code: string = null): Observable<Array<StateModel>> {
     return this.http
       .get<{ _embedded: { states: Array<StateModel> } }>(
-        code
-          ? replaceUrlParameters(AppUrl.FIND_STATE_BY_COUNTRY_CODE, code)
-          : AppUrl.ALL_STATE
+          replaceUrlParameters(AppUrl.FIND_STATE_BY_COUNTRY_CODE, code)
       )
       .pipe(map((country) => country._embedded.states));
   }
