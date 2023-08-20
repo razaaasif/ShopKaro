@@ -205,10 +205,10 @@
             </div>
             <div class="col-md-6">
               <div class="input-space">
-                <select formControlName="expirationMonth" class="form-control">
+                <select formControlName="expirationYear" class="form-control" (change)="onChangeYear($event)">
                   <option
                     *ngFor="let year of years"
-                    (onChange)="onChangeYear($event)"
+                
                     [ngValue]="year"
                   >
                     {{ year }}

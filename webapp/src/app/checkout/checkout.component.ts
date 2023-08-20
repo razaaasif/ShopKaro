@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Country, State, City } from 'country-state-city';
 import { Subscription } from 'rxjs';
 import { CountryModel } from 'src/shared/model/country.model';
 import { StateModel } from 'src/shared/model/state.model';
 import { FormServiceService } from 'src/shared/services/form-service.service';
 import { LoggerService } from 'src/shared/services/logger.service';
-
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -72,18 +72,21 @@ export class CheckoutComponent implements OnInit {
     );
   }
 
-  onChangeYear(year: any) {
+  onChangeYear(year: Event) {
+    const expirationYear =
+      this.checkOutFormGroup.get('creditCard').value['expirationYear'];
+    console.log('onChangeYear -> ' + JSON.stringify(expirationYear));
     let month = 1;
     const date = new Date();
     this.logger.debug(
       'onChangeYear date.getFullYear(): -> ' + date.getFullYear()
     );
 
-    if (year.value === date.getFullYear()) {
+    if (expirationYear === date.getFullYear()) {
       month = date.getMonth() + 1;
       this.logger.debug('onChangeYear Month: -> ' + month);
     }
-    this.logger.debug('selected year: ' + JSON.stringify(year.value));
+    this.logger.debug('selected year: ' + JSON.stringify(expirationYear));
     this._subs.push(
       this.formService.getCreditCardMonths(month).subscribe((months) => {
         this.months = months;
@@ -98,15 +101,19 @@ export class CheckoutComponent implements OnInit {
 
   getState(address: Event): void {
     const selectedCountry = (address.target as HTMLSelectElement).value;
-    const index =  selectedCountry.split(":")[0];
-      console.log('getState() address ->' + JSON.stringify(this.countries[index]));
-   const code =  this.countries[index].code;
+    const index = selectedCountry.split(':')[0];
+    console.log(
+      'getState() address ->' + JSON.stringify(this.countries[index])
+    );
+    const code = this.countries[index].code;
     this.formService.getStates(code).subscribe((states) => {
-      console.log('getState() Response states: ' + JSON.stringify( states));
+      console.log('getState() Response states: ' + JSON.stringify(states));
       this.states = states.map((state) => {
-        state.label =  state.name;
+        state.label = state.name;
         return state;
       });
     });
+    const stateCode = State.getStatesOfCountry('IN');
+    this.logger.debug('stateCode: ' + JSON.stringify(stateCode));
   }
 }

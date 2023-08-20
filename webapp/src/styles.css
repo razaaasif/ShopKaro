@@ -622,7 +622,7 @@ input[type="number"] {
   height: 40px;
   border-radius: 30px;
   outline: 0;
-  padding: 0 10px;
+  padding: 0 20px;
   border: 1px solid #ccc;
 }
 .au-checkbox {
