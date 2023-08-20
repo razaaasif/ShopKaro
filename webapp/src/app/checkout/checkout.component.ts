@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Country, State, City } from 'country-state-city';
 import { Subscription } from 'rxjs';
 import { CountryModel } from 'src/shared/model/country.model';
@@ -29,9 +34,18 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.checkOutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
-        firstName: [''],
-        lastName: [''],
-        email: [''],
+        firstName: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+        ]),
+        lastName: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+        ]),
+        email: new FormControl('', [
+          Validators.required,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+        ]),
       }),
       shippingAddress: this.formBuilder.group({
         country: [''],
@@ -115,5 +129,16 @@ export class CheckoutComponent implements OnInit {
     });
     const stateCode = State.getStatesOfCountry('IN');
     this.logger.debug('stateCode: ' + JSON.stringify(stateCode));
+  }
+
+  get firstName() {
+    return this.checkOutFormGroup.get('customer.firstName');
+  }
+  get lastName() {
+    return this.checkOutFormGroup.get('customer.lastName');
+  }
+
+  get email() {
+    return this.checkOutFormGroup.get('customer.email') ;
   }
 }

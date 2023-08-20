@@ -11,7 +11,21 @@
             </div>
             <div class="col-md-6">
               <div class="input-space">
-                <input formControlName="firstName" type="text" pInputText />
+                <input
+                  formControlName="firstName"
+                  type="text"
+                  [class]="
+                    firstName.touched && firstName.invalid && firstName.touched
+                      ? 'border border-danger'
+                      : ''
+                  "
+                />
+                <ng-container
+                  *ngTemplateOutlet="
+                    errorName;
+                    context: { $implicit: { name: firstName, field: 'First Name' } }
+                  "
+                ></ng-container>
               </div>
             </div>
           </div>
@@ -22,7 +36,21 @@
             </div>
             <div class="col-md-6">
               <div class="input-space">
-                <input formControlName="lastName" type="text" pInputText />
+                <input
+                  formControlName="lastName"
+                  type="text"
+                  [class]="
+                    lastName.touched && lastName.invalid && lastName.touched
+                      ? 'border border-danger'
+                      : ''
+                  "
+                />
+                <ng-container
+                  *ngTemplateOutlet="
+                    errorName;
+                    context: { $implicit: { name: lastName, field: 'Last Name' } }
+                  "
+                ></ng-container>
               </div>
             </div>
           </div>
@@ -33,7 +61,22 @@
             </div>
             <div class="col-md-6">
               <div class="input-space">
-                <input pInputText formControlName="email" type="email" />
+                  <input
+                  formControlName="email"
+                  type="text"
+                  [class]="
+                    email.touched && email.invalid && email.touched
+                      ? 'border border-danger'
+                      : ''
+                  "
+                />
+                <ng-container
+                  *ngTemplateOutlet="
+                    errorName;
+                    context: { $implicit: { name: email, field: 'Email' } }
+                  "
+                ></ng-container>
+                
               </div>
             </div>
           </div>
@@ -46,8 +89,12 @@
             </div>
             <div class="col-md-6">
               <div class="input-space">
-                <select formControlName="country" class="form-control" (change)="getState($event)">
-                  <option 
+                <select
+                  formControlName="country"
+                  class="form-control"
+                  (change)="getState($event)"
+                >
+                  <option
                     *ngFor="let country of countries"
                     [ngValue]="country.name"
                   >
@@ -126,7 +173,6 @@
           </div>
         </div>
 
-       
         <div class="form-area" formGroupName="creditCard">
           <h3>Credit Card</h3>
           <div class="row">
@@ -205,12 +251,12 @@
             </div>
             <div class="col-md-6">
               <div class="input-space">
-                <select formControlName="expirationYear" class="form-control" (change)="onChangeYear($event)">
-                  <option
-                    *ngFor="let year of years"
-                
-                    [ngValue]="year"
-                  >
+                <select
+                  formControlName="expirationYear"
+                  class="form-control"
+                  (change)="onChangeYear($event)"
+                >
+                  <option *ngFor="let year of years" [ngValue]="year">
                     {{ year }}
                   </option>
                 </select>
@@ -234,3 +280,17 @@
     </div>
   </div>
 </div>
+
+<ng-template let-item #errorName>
+  <div
+    *ngIf="item.name.invalid && (item.name.dirty || item.name.touched)"
+    class="alert alert-danger"
+  >
+    <div *ngIf="item.name.errors.required">
+      {{ item.field }} is required
+    </div>
+    <div *ngIf="item.name.errors.minlength">
+      {{ item.field }} must be at least 2 characters
+    </div>
+  </div>
+</ng-template>
