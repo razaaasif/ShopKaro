@@ -1,6 +1,7 @@
 import { Subscription } from 'rxjs';
 import { CartModel } from './model/cart-status.model';
 import { ProductModel } from './model/product.model';
+import { FormControl, ValidationErrors } from '@angular/forms';
 export function replaceUrlParameters(
   url: string,
   ...dynamicValues: any[]
@@ -15,8 +16,11 @@ export function unsubscribe(subscription: Array<Subscription>) {
 }
 
 export function safeTrim(str: string) {
+  if (typeof str === 'number' && !isNaN(str)) {
+    return str;
+  }
   if (str != null) {
-    str = str.trim();
+    str = String(str).trim();
     return str.length === 0 ? '' : str;
   }
   return '';
@@ -64,3 +68,49 @@ export function setOfferPrice(
   product.off = 1 * 10;
   product.newPrice = product.unitPrice * unit * (1 - product.off / 100);
 }
+
+type ValidationType = 'text' | 'number' | 'onlyText';
+
+function createValidationFunction(
+  validationType: ValidationType
+): (control: FormControl) => ValidationErrors {
+  const patterns: {
+    [key in ValidationType]: { pattern: RegExp; errorMessage: string };
+  } = {
+    text: {
+      pattern: /^[a-zA-Z0-9, ]*$/,
+      errorMessage: 'Value contains invalid characters.',
+    },
+    number: {
+      pattern: /^[0-9]*$/,
+      errorMessage: 'Only numeric values allowed.',
+    },
+    onlyText: {
+      pattern: /^[a-zA-Z]*$/,
+      errorMessage: 'Value contains invalid characters.',
+    },
+  };
+
+  const { pattern, errorMessage } = patterns[validationType];
+
+  return (control: FormControl): ValidationErrors => {
+    const value: any = safeTrim(control.value);
+
+    if (value != null) {
+      if (String(value).length < 2) {
+        return { validationError: 'Value cannot be empty' };
+      }
+      if (!pattern.test(value)) {
+        return {
+          validationError: errorMessage,
+        };
+      }
+    }
+
+    return null;
+  };
+}
+
+export const isValidText = createValidationFunction('text');
+export const isOnlyNumber = createValidationFunction('number');
+export const isOnlyText = createValidationFunction('onlyText');

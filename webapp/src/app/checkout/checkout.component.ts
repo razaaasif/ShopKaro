@@ -11,6 +11,12 @@ import { CountryModel } from 'src/shared/model/country.model';
 import { StateModel } from 'src/shared/model/state.model';
 import { FormServiceService } from 'src/shared/services/form-service.service';
 import { LoggerService } from 'src/shared/services/logger.service';
+import {
+  isOnlyNumber,
+  isOnlyText,
+  isValidText,
+  safeTrim,
+} from 'src/shared/utils';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -25,6 +31,7 @@ export class CheckoutComponent implements OnInit {
   public totalQuantity: number = 0;
   public years: Array<number> = new Array<number>();
   public months: Array<number> = new Array<number>();
+  public safeTrim = safeTrim;
   constructor(
     private formBuilder: FormBuilder,
     private formService: FormServiceService,
@@ -37,10 +44,12 @@ export class CheckoutComponent implements OnInit {
         firstName: new FormControl('', [
           Validators.required,
           Validators.minLength(2),
+          isOnlyText,
         ]),
         lastName: new FormControl('', [
           Validators.required,
           Validators.minLength(2),
+          isOnlyText,
         ]),
         email: new FormControl('', [
           Validators.required,
@@ -48,11 +57,31 @@ export class CheckoutComponent implements OnInit {
         ]),
       }),
       shippingAddress: this.formBuilder.group({
-        country: [''],
-        street: [''],
-        city: [''],
-        state: [''],
-        zipCode: [''],
+        country: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          isOnlyText,
+        ]),
+        street: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          isValidText,
+        ]),
+        city: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          isOnlyText,
+        ]),
+        state: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          isOnlyText,
+        ]),
+        zipCode: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          isOnlyNumber,
+        ]),
       }),
       creditCard: this.formBuilder.group({
         cardType: [''],
@@ -110,7 +139,10 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.checkOutFormGroup.getRawValue());
+    this.logger.debug(this.checkOutFormGroup.getRawValue());
+    if (this.checkOutFormGroup.invalid) {
+      this.checkOutFormGroup.markAllAsTouched();
+    }
   }
 
   getState(address: Event): void {
@@ -139,6 +171,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   get email() {
-    return this.checkOutFormGroup.get('customer.email') ;
+    return this.checkOutFormGroup.get('customer.email');
   }
 }

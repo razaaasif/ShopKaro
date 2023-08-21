@@ -23,7 +23,9 @@
                 <ng-container
                   *ngTemplateOutlet="
                     errorName;
-                    context: { $implicit: { name: firstName, field: 'First Name' } }
+                    context: {
+                      $implicit: { name: firstName, field: 'First Name' }
+                    }
                   "
                 ></ng-container>
               </div>
@@ -48,7 +50,9 @@
                 <ng-container
                   *ngTemplateOutlet="
                     errorName;
-                    context: { $implicit: { name: lastName, field: 'Last Name' } }
+                    context: {
+                      $implicit: { name: lastName, field: 'Last Name' }
+                    }
                   "
                 ></ng-container>
               </div>
@@ -61,7 +65,7 @@
             </div>
             <div class="col-md-6">
               <div class="input-space">
-                  <input
+                <input
                   formControlName="email"
                   type="text"
                   [class]="
@@ -70,13 +74,16 @@
                       : ''
                   "
                 />
-                <ng-container
-                  *ngTemplateOutlet="
-                    errorName;
-                    context: { $implicit: { name: email, field: 'Email' } }
-                  "
-                ></ng-container>
-                
+
+                <div
+                  *ngIf="email.invalid && (email.dirty || email.touched)"
+                  class="alert alert-danger my-1"
+                >
+                  <div *ngIf="email.errors['required']">Email is required</div>
+                  <div *ngIf="email.errors['pattern']">
+                    invalid email 
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -284,11 +291,9 @@
 <ng-template let-item #errorName>
   <div
     *ngIf="item.name.invalid && (item.name.dirty || item.name.touched)"
-    class="alert alert-danger"
+    class="alert alert-danger my-1"
   >
-    <div *ngIf="item.name.errors.required">
-      {{ item.field }} is required
-    </div>
+    <div *ngIf="item.name.errors.required || (item.name.errors.errorMessage && safeTrim(item.name.value).length > 0 )">{{ item.field }}  {{item.name.errors.errorMessage}}is required</div>
     <div *ngIf="item.name.errors.minlength">
       {{ item.field }} must be at least 2 characters
     </div>
