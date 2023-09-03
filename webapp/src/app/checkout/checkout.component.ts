@@ -15,6 +15,7 @@ import {
   isOnlyNumber,
   isOnlyText,
   isValidText,
+  isWhiteSpaceAllowedBetween,
   safeTrim,
 } from 'src/shared/utils';
 @Component({
@@ -79,17 +80,29 @@ export class CheckoutComponent implements OnInit {
         ]),
         zipCode: new FormControl('', [
           Validators.required,
-          Validators.minLength(2),
+          Validators.min(10000),
           isOnlyNumber,
         ]),
       }),
       creditCard: this.formBuilder.group({
-        cardType: [''],
-        nameOnCard: [''],
-        cardNumber: [''],
-        securityCode: [''],
-        expirationMonth: [''],
-        expirationYear: [''],
+        cardType: new FormControl('', [Validators.required]),
+        nameOnCard: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          isWhiteSpaceAllowedBetween,
+        ]),
+        cardNumber: new FormControl('', [
+          Validators.required,
+          Validators.pattern('[0-9]{16}'),
+          isOnlyNumber,
+        ]),
+        securityCode: new FormControl('', [
+          Validators.required,
+          Validators.pattern('[0-9]{3}'),
+          isOnlyNumber,
+        ]),
+        expirationMonth: new FormControl('', [Validators.required]),
+        expirationYear: new FormControl('', [Validators.required]),
       }),
     });
     this._subs.push(
@@ -172,5 +185,48 @@ export class CheckoutComponent implements OnInit {
 
   get email() {
     return this.checkOutFormGroup.get('customer.email');
+  }
+
+  get shippingAddressStreet() {
+    return this.checkOutFormGroup.get('shippingAddress.street');
+  }
+
+  get shippingAddressCity() {
+    return this.checkOutFormGroup.get('shippingAddress.city');
+  }
+
+  get shippingAddressState() {
+    return this.checkOutFormGroup.get('shippingAddress.state');
+  }
+
+  get shippingAddressCoutry() {
+    return this.checkOutFormGroup.get('shippingAddress.country');
+  }
+  get shippingAddressZipCode() {
+    return this.checkOutFormGroup.get('shippingAddress.zipCode');
+  }
+
+  get creditCardCardType() {
+    return this.checkOutFormGroup.get('creditCard.cardType');
+  }
+
+  get creditCardNameOnCard() {
+    return this.checkOutFormGroup.get('creditCard.nameOnCard');
+  }
+
+  get creditCardCardNumber() {
+    return this.checkOutFormGroup.get('creditCard.cardNumber');
+  }
+
+  get creditCardSecurityCode() {
+    return this.checkOutFormGroup.get('creditCard.securityCode');
+  }
+
+  get creditCardExpirationMonth() {
+    return this.checkOutFormGroup.get('creditCard.expirationMonth');
+  }
+
+  get creditCardExpirationYear() {
+    return this.checkOutFormGroup.get('creditCard.expirationYear');
   }
 }

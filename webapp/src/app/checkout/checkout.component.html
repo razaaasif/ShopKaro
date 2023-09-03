@@ -80,9 +80,7 @@
                   class="alert alert-danger my-1"
                 >
                   <div *ngIf="email.errors['required']">Email is required</div>
-                  <div *ngIf="email.errors['pattern']">
-                    invalid email 
-                  </div>
+                  <div *ngIf="email.errors['pattern']">invalid email</div>
                 </div>
               </div>
             </div>
@@ -108,6 +106,17 @@
                     {{ country.label }}
                   </option>
                 </select>
+                <ng-container
+                  *ngTemplateOutlet="
+                    errorName;
+                    context: {
+                      $implicit: {
+                        name: shippingAddressCoutry,
+                        field: 'Country'
+                      }
+                    }
+                  "
+                ></ng-container>
               </div>
             </div>
           </div>
@@ -124,6 +133,17 @@
                   type="text"
                   class="form-group"
                 />
+                <ng-container
+                  *ngTemplateOutlet="
+                    errorName;
+                    context: {
+                      $implicit: {
+                        name: shippingAddressStreet,
+                        field: 'Street'
+                      }
+                    }
+                  "
+                ></ng-container>
               </div>
             </div>
           </div>
@@ -140,6 +160,14 @@
                   type="text"
                   class="form-group"
                 />
+                <ng-container
+                  *ngTemplateOutlet="
+                    errorName;
+                    context: {
+                      $implicit: { name: shippingAddressCity, field: 'City' }
+                    }
+                  "
+                ></ng-container>
               </div>
             </div>
           </div>
@@ -159,6 +187,14 @@
                     {{ state.label }}
                   </option>
                 </select>
+                <ng-container
+                  *ngTemplateOutlet="
+                    errorName;
+                    context: {
+                      $implicit: { name: shippingAddressState, field: 'State' }
+                    }
+                  "
+                ></ng-container>
               </div>
             </div>
           </div>
@@ -175,6 +211,17 @@
                   mode="decimal"
                   formControlName="zipCode"
                 />
+                <ng-container
+                  *ngTemplateOutlet="
+                    errorName;
+                    context: {
+                      $implicit: {
+                        name: shippingAddressZipCode,
+                        field: 'Zip Code'
+                      }
+                    }
+                  "
+                ></ng-container>
               </div>
             </div>
           </div>
@@ -196,6 +243,17 @@
                     {{ card }}
                   </option>
                 </select>
+                <ng-container
+                  *ngTemplateOutlet="
+                    errorName;
+                    context: {
+                      $implicit: {
+                        name: creditCardCardType,
+                        field: 'Card Type'
+                      }
+                    }
+                  "
+                ></ng-container>
               </div>
             </div>
           </div>
@@ -207,6 +265,17 @@
             <div class="col-md-6">
               <div class="input-space">
                 <input type="text" formControlName="nameOnCard" />
+                <ng-container
+                  *ngTemplateOutlet="
+                    errorName;
+                    context: {
+                      $implicit: {
+                        name: creditCardNameOnCard,
+                        field: 'Card Type'
+                      }
+                    }
+                  "
+                ></ng-container>
               </div>
             </div>
           </div>
@@ -221,6 +290,18 @@
                   mode="decimal"
                   formControlName="cardNumber"
                 />
+                <ng-container
+                  *ngTemplateOutlet="
+                    errorName;
+                    context: {
+                      $implicit: {
+                        name: creditCardCardNumber,
+                        field: 'Card Number',
+                         digit: 16
+                      }
+                    }
+                  "
+                ></ng-container>
               </div>
             </div>
           </div>
@@ -235,6 +316,18 @@
                   type="number"
                   formControlName="securityCode"
                 />
+                <ng-container
+                  *ngTemplateOutlet="
+                    errorName;
+                    context: {
+                      $implicit: {
+                        name: creditCardSecurityCode,
+                        field: 'Security Code',
+                        digit: 3
+                      }
+                    }
+                  "
+                ></ng-container>
               </div>
             </div>
           </div>
@@ -249,6 +342,18 @@
                     {{ month }}
                   </option>
                 </select>
+
+                <ng-container
+                  *ngTemplateOutlet="
+                    errorName;
+                    context: {
+                      $implicit: {
+                        name: creditCardExpirationMonth,
+                        field: 'Expiration Month'
+                      }
+                    }
+                  "
+                ></ng-container>
               </div>
             </div>
           </div>
@@ -267,6 +372,17 @@
                     {{ year }}
                   </option>
                 </select>
+                <ng-container
+                  *ngTemplateOutlet="
+                    errorName;
+                    context: {
+                      $implicit: {
+                        name: creditCardExpirationYear,
+                        field: 'Expiration Year'
+                      }
+                    }
+                  "
+                ></ng-container>
               </div>
             </div>
           </div>
@@ -293,9 +409,34 @@
     *ngIf="item.name.invalid && (item.name.dirty || item.name.touched)"
     class="alert alert-danger my-1"
   >
-    <div *ngIf="item.name.errors.required || (item.name.errors.errorMessage && safeTrim(item.name.value).length > 0 )">{{ item.field }}  {{item.name.errors.errorMessage}}is required</div>
-    <div *ngIf="item.name.errors.minlength">
-      {{ item.field }} must be at least 2 characters
+    <div
+      *ngIf="
+        item.name.errors.required ||
+        (item.name.errors.errorMessage && safeTrim(item.name.value).length > 0)
+      "
+    >
+      {{ item.field }} {{ item.name.errors.errorMessage }} is required.
     </div>
+    <div *ngIf="item.name.errors.minlength; else validationError">
+      {{ item.field }} must be at least 2 characters.
+    </div>
+
+    <ng-template #validationError>
+      <div *ngIf="item.name.errors.validationError; else minLengths">
+        {{ item.name.errors.validationError }}
+      </div>
+      <ng-template #minLengths>
+        <div *ngIf="item.name.errors.minlength">
+          {{ item.field }} must be at least 2 characters
+        </div>
+        <!-- {{item.name.errors | json}} -->
+        <div *ngIf="item.name.errors.min">
+          {{item.filed}} should be atleast 5 digits.
+        </div>
+         <div *ngIf="item.name.errors.pattern">
+           {{item.filed}}  should be of {{item.digit}}  digits.
+        </div>
+      </ng-template>
+    </ng-template>
   </div>
 </ng-template>

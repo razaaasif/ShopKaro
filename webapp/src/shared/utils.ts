@@ -69,7 +69,7 @@ export function setOfferPrice(
   product.newPrice = product.unitPrice * unit * (1 - product.off / 100);
 }
 
-type ValidationType = 'text' | 'number' | 'onlyText';
+type ValidationType = 'text' | 'number' | 'onlyText' | 'isValidText';
 
 function createValidationFunction(
   validationType: ValidationType
@@ -89,6 +89,10 @@ function createValidationFunction(
       pattern: /^[a-zA-Z]*$/,
       errorMessage: 'Value contains invalid characters.',
     },
+    isValidText: {
+      pattern: /^[a-zA-Z\s]*$/,
+      errorMessage: 'Only letters and whitespace allowed between characters.',
+    },
   };
 
   const { pattern, errorMessage } = patterns[validationType];
@@ -97,9 +101,6 @@ function createValidationFunction(
     const value: any = safeTrim(control.value);
 
     if (value != null) {
-      if (String(value).length < 2) {
-        return { validationError: 'Value cannot be empty' };
-      }
       if (!pattern.test(value)) {
         return {
           validationError: errorMessage,
@@ -114,3 +115,5 @@ function createValidationFunction(
 export const isValidText = createValidationFunction('text');
 export const isOnlyNumber = createValidationFunction('number');
 export const isOnlyText = createValidationFunction('onlyText');
+export const isWhiteSpaceAllowedBetween =
+  createValidationFunction('isValidText');
