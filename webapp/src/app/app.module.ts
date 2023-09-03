@@ -57,6 +57,7 @@ const routes: Routes = [
     CartDetailsComponent,
     ProductDetailInfoComponent,
     TruncatePipe,
+
   ],
   imports: [
     BrowserModule,

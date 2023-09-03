@@ -297,7 +297,7 @@
                       $implicit: {
                         name: creditCardCardNumber,
                         field: 'Card Number',
-                         digit: 16
+                        digit: 16
                       }
                     }
                   "
@@ -387,15 +387,49 @@
             </div>
           </div>
         </div>
-        <div class="form-area">
-          <!--Order Details-->
-          <h3>Review Order</h3>
-          <p>Totoal Quantity : {{ totalQuantity }}</p>
-          <p>Shipping: FREE</p>
-          <p>Totoal Price : {{ totalPrice }}</p>
+        <div class="flex-col row-30 bg-white price-details">
+          <span class="price-details-items font-bold"> PRICE DETAILS </span>
+          <hr class="text-secondary m-0" />
+          <div class="flex-col m-4 mb-0 price-detail-info">
+            <div class="flex-row space-between mb-3">
+              <span class=" ">Price ({{ cartStatus.totalNumber }} items) </span>
+              <span>₹{{ cartStatus.price | number : "1.2-3" }}</span>
+            </div>
+            <div class="flex-row space-between mb-3">
+              <span class=" ">Discount </span>
+              <span class="text-success">
+                {{
+                  cartStatus.price - cartStatus.totalUnitPrice
+                    | number : "1.3-3"
+                    | currency : "INR"
+                }}</span
+              >
+            </div>
+            <div class="flex-row space-between mb-3">
+              <span> Delivery Charges </span>
+              <span class="text-success">Free</span>
+            </div>
+            <span class="price-detail-info mb-3"></span>
+            <div class="flex-row space-between mb-3 font-bold">
+              <span class=" ">Total Amount </span>
+              <span>₹{{ cartStatus.price | number : "1.2-3" }}</span>
+            </div>
+          </div>
+          <div class="flex space-between mb-3 font-bold ml-4 mt-2 text-success">
+            <div class="ml-1">
+              You will save
+              <span class="text-success">
+                ₹{{
+                  cartStatus.totalUnitPrice - cartStatus.price
+                    | number : "1.2-3"
+                }}</span
+              >
+              on this order
+            </div>
+          </div>
         </div>
-        <div class="flex mb-4">
-          <button type="submit" class="btn btn-info btn-lg m-auto">
+        <div class="flex m-4">
+          <button type="submit" class="btn btn-primary btn-lg m-auto">
             Checkout
           </button>
         </div>
@@ -431,10 +465,10 @@
         </div>
         <!-- {{item.name.errors | json}} -->
         <div *ngIf="item.name.errors.min">
-          {{item.filed}} should be atleast 5 digits.
+          {{ item.filed }} should be atleast 5 digits.
         </div>
-         <div *ngIf="item.name.errors.pattern">
-           {{item.filed}}  should be of {{item.digit}}  digits.
+        <div *ngIf="item.name.errors.pattern">
+          {{ item.filed }} should be of {{ item.digit }} digits.
         </div>
       </ng-template>
     </ng-template>

@@ -3,3 +3,49 @@
   padding: auto;
   width: 90%;
 }
+
+.price-details {
+  max-width: 40%;
+  display: flex;
+  margin: auto;
+}
+
+
+img {
+  max-height: 150px !important;
+  max-width: 200px;
+}
+.row-70 {
+  width: 60%;
+  top: 0;
+  bottom: 5rem;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+}
+
+.row-30 {
+  width: 20%;
+}
+.no-spinner-input::-webkit-inner-spin-button{
+  display: none;
+}
+
+
+.price-details {
+width: 60% !important;
+margin: auto;
+
+}
+
+.price-detail-info {
+  border-bottom: 1px dashed rgb(168, 166, 166);
+}
+
+.price-details-items {
+  color: rgb(171, 166, 166);
+  display: flex;
+  text-align: center;
+  margin: 1rem;
+}
+

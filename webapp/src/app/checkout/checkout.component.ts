@@ -7,10 +7,12 @@ import {
 } from '@angular/forms';
 import { Country, State, City } from 'country-state-city';
 import { Subscription } from 'rxjs';
+import { CartStatusModel } from 'src/shared/model/cart-status.model';
 import { CountryModel } from 'src/shared/model/country.model';
 import { StateModel } from 'src/shared/model/state.model';
 import { FormServiceService } from 'src/shared/services/form-service.service';
 import { LoggerService } from 'src/shared/services/logger.service';
+import { ProductCartService } from 'src/shared/services/product-cart-service';
 import {
   isOnlyNumber,
   isOnlyText,
@@ -25,6 +27,8 @@ import {
 })
 export class CheckoutComponent implements OnInit {
   private _subs: Array<Subscription> = new Array<Subscription>();
+  public cartStatus: CartStatusModel = new CartStatusModel();
+
   countries: Array<CountryModel> = new Array<CountryModel>();
   states: Array<StateModel> = new Array<StateModel>();
   public checkOutFormGroup: FormGroup;
@@ -36,7 +40,8 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private formService: FormServiceService,
-    private logger: LoggerService
+    private logger: LoggerService,
+    private productCartService: ProductCartService
   ) {}
 
   ngOnInit(): void {
@@ -123,6 +128,13 @@ export class CheckoutComponent implements OnInit {
         });
         this.logger.debug(
           'ngOnInit countries: -> ' + JSON.stringify(this.countries)
+        );
+      }),
+      this.productCartService.productCartStatus$.subscribe((data) => {
+        this.cartStatus = data;
+        this.logger.debug(
+          'ProductCartComponent ngOnInit() cartStatus: ' +
+            JSON.stringify(this.cartStatus)
         );
       })
     );
