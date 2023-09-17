@@ -4,7 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.Pattern;
+
+import com.shopkaro.entity.order.Order;
 
 @Entity
 public class Address {
@@ -24,6 +28,10 @@ public class Address {
 	private String country;
 	@Pattern(regexp = "^[0-9]{5}$", message = "Only 5 numeric digits are allowed")
 	private Integer zipCode;
+
+	@OneToMany
+	@PrimaryKeyJoinColumn
+	private Order order;
 
 	public Long getId() {
 		return id;
@@ -71,6 +79,14 @@ public class Address {
 
 	public void setZipCode(Integer zipCode) {
 		this.zipCode = zipCode;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 }

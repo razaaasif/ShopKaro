@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class OrderItem {
@@ -16,6 +18,9 @@ public class OrderItem {
 	private BigDecimal unitPrice;
 	private int quantity;
 	private Long productId;
+	@ManyToOne
+	@JoinColumn(name="order_id")
+	private Order order;
 	public Long getId() {
 		return id;
 	}
@@ -46,6 +51,10 @@ public class OrderItem {
 	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
-	
-	
+	public Order getOrder() {
+		return order;
+	}
+	public void setOrder(Order order) {
+		this.order = order;
+	}	
 }
